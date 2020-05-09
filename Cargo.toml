@@ -10,7 +10,7 @@ keywords = ["rust", "vigem", "xbox360", "xbox"]
 license = "GPL-3.0-or-later"
 
 [dependencies]
-libloading = "*"
+libloading = "0.6"
 
 [profile.release]
 lto = true
