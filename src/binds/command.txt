@@ -1,0 +1,1 @@
+bindgen .\ViGEmClient.cpp -o mod.rs  --whitelist-function 'vigem_.*'  
