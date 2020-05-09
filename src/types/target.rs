@@ -1,8 +1,8 @@
 use lib::Library;
 
-use crate::binds::{PVIGEM_CLIENT, PVIGEM_TARGET, VIGEM_ERROR, _VIGEM_TARGET_STATE, _VIGEM_TARGET_TYPE};
-
-
+use crate::binds::{
+    PVIGEM_CLIENT, PVIGEM_TARGET, VIGEM_ERROR, _VIGEM_TARGET_STATE, _VIGEM_TARGET_TYPE,
+};
 
 pub struct Target {
     pub raw: PVIGEM_TARGET,
@@ -37,10 +37,10 @@ impl Target {
         unsafe { TargetState::new((*self.raw).State) }
     }
 
-    pub fn vendor_id(&self) -> u16 {
+    pub fn get_vid(&self) -> u16 {
         unsafe { (*self.raw).VendorId }
     }
-    pub fn product_id(&self) -> u16 {
+    pub fn get_pid(&self) -> u16 {
         unsafe { (*self.raw).ProductId }
     }
 
@@ -65,11 +65,54 @@ impl Target {
     //     unsafe { (*self.raw).notificationThreadList }
     // }
 
+    pub fn index(&self) -> u32 {
+        unsafe {
+            let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_TARGET) -> u32> =
+                self.lib.get(b"vigem_target_get_index").unwrap();
+            return f(self.raw);
+        }
+    }
+
+    pub fn is_attached(&self) -> bool {
+        unsafe {
+            let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_TARGET) -> bool> =
+                self.lib.get(b"vigem_target_is_attached").unwrap();
+            return f(self.raw);
+        }
+    }
+
     fn target_x360_alloc(lib: &Library) -> PVIGEM_TARGET {
         unsafe {
             let f: lib::Symbol<unsafe extern "C" fn() -> PVIGEM_TARGET> =
                 lib.get(b"vigem_target_x360_alloc").unwrap();
             return f();
+        }
+    }
+
+    pub fn unregister_notification(&self){
+        unsafe {
+            let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_TARGET)>;
+            match self.get_type() {
+                TargetType::Xbox360 => {f = self.lib.get(b"vigem_target_x360_unregister_notification").unwrap()},
+                TargetType::DualShock4 => {f = self.lib.get(b"vigem_target_ds4_unregister_notification").unwrap()}
+            }
+            return f(self.raw);
+        }
+    }
+
+    pub fn set_vid(&self, vid: u16) {
+        unsafe {
+            let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_TARGET, u16)> =
+                self.lib.get(b"vigem_target_set_vid").unwrap();
+            return f(self.raw, vid);
+        }
+    }
+
+    pub fn set_pid(&self, pid: u16) {
+        unsafe {
+            let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_TARGET, u16)> =
+                self.lib.get(b"vigem_target_set_pid").unwrap();
+            return f(self.raw, pid);
         }
     }
 
@@ -93,7 +136,7 @@ impl Target {
 impl Drop for Target {
     /// Always drop a target - we are good boys
     fn drop(&mut self) {
-      self.target_free();
+        self.target_free();
     }
 }
 
@@ -108,13 +151,10 @@ impl TargetType {
         match tt {
             0 => TargetType::Xbox360,
             2 => TargetType::DualShock4,
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
 }
-
-
-
 
 #[derive(Debug)]
 pub enum TargetState {
@@ -132,7 +172,7 @@ impl TargetState {
             1 => Initialized,
             2 => Connected,
             3 => Disconnected,
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
 }

@@ -36,11 +36,31 @@ impl Vigem {
         }
     }
 
-    pub fn target_add(&mut self, target: &Target) -> VIGEM_ERROR {
+    pub fn target_add(&mut self, target: &Target) -> Result<(), VigemError> {
         unsafe {
             let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_CLIENT, PVIGEM_TARGET) -> VIGEM_ERROR> =
                 self.lib.get(b"vigem_target_add").unwrap();
-            return f(self.vigem, target.raw);
+            let r =  f(self.vigem, target.raw);
+            let err = VigemError::new(r);
+            if err.is_err() {
+                return Err(err);
+            } else {
+                return Ok(());
+            }
+        }
+    }
+
+    pub fn target_remove(&mut self, target: &Target) -> Result<(), VigemError> {
+        unsafe {
+            let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_CLIENT, PVIGEM_TARGET) -> VIGEM_ERROR> =
+                self.lib.get(b"vigem_target_remove").unwrap();
+                let r =  f(self.vigem, target.raw);
+                let err = VigemError::new(r);
+                if err.is_err() {
+                    return Err(err);
+                } else {
+                    return Ok(());
+                }
         }
     }
 

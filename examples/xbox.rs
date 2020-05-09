@@ -11,8 +11,12 @@ pub fn main() {
 
     let target = Target::new(TargetType::Xbox360);
     dbg!(target.state());
-    vigem.target_add(&target);
+    vigem.target_add(&target).unwrap();
     dbg!(target.state());
+    dbg!(target.get_type());
+    vigem.target_remove(&target).unwrap();
+    dbg!(target.state());
+
     
 }
 
