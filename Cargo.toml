@@ -19,4 +19,4 @@ lto = true
 codegen-units = 3
 
 [build-dependencies]
-bindgen = "*"
+bindgen = "0.51"
