@@ -3,7 +3,9 @@
 ### It's WIP
 
 ### Warning
-I cant link this lib (needs help) so you have to move [this file]("https://github.com/DuckerMan/vigem/blob/master/dlls/ViGEmClient_x64.dll") to your `.exe` file catalog
+I cant link this lib (**need help**) so you have to move [this file]("https://github.com/DuckerMan/vigem/blob/master/dlls/ViGEmClient_x64.dll") to your `.exe` file catalog
+
+Other problem, that bindgen can generate right binding for `EVT_VIGEM_X360_NOTIFICATION` and `EVT_VIGEM_DS$_NOTIFICATION` so I also need help
 
 ### How to use?
 Check examples directory
