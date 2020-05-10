@@ -4,6 +4,7 @@ pub type size_t = ::std::os::raw::c_ulonglong;
 pub type ULONG = ::std::os::raw::c_ulong;
 pub type PULONG = *mut ULONG;
 pub type USHORT = ::std::os::raw::c_ushort;
+pub type UCHAR = ::std::os::raw::c_uchar;
 pub type DWORD = ::std::os::raw::c_ulong;
 pub type BOOL = ::std::os::raw::c_int;
 pub type BYTE = ::std::os::raw::c_uchar;
@@ -1528,6 +1529,22 @@ pub const _VIGEM_TARGET_TYPE_Xbox360Wired: _VIGEM_TARGET_TYPE = 0;
 pub const _VIGEM_TARGET_TYPE_DualShock4Wired: _VIGEM_TARGET_TYPE = 2;
 pub type _VIGEM_TARGET_TYPE = i32;
 pub use self::_VIGEM_TARGET_TYPE as VIGEM_TARGET_TYPE;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_UP: _XUSB_BUTTON = 1;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_DOWN: _XUSB_BUTTON = 2;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_LEFT: _XUSB_BUTTON = 4;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_RIGHT: _XUSB_BUTTON = 8;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_START: _XUSB_BUTTON = 16;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_BACK: _XUSB_BUTTON = 32;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_LEFT_THUMB: _XUSB_BUTTON = 64;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_RIGHT_THUMB: _XUSB_BUTTON = 128;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_LEFT_SHOULDER: _XUSB_BUTTON = 256;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_RIGHT_SHOULDER: _XUSB_BUTTON = 512;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_GUIDE: _XUSB_BUTTON = 1024;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_A: _XUSB_BUTTON = 4096;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_B: _XUSB_BUTTON = 8192;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_X: _XUSB_BUTTON = 16384;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_Y: _XUSB_BUTTON = 32768;
+pub type _XUSB_BUTTON = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _XUSB_REPORT {
@@ -1729,6 +1746,186 @@ fn bindgen_test_layout__DS4_REPORT() {
     );
 }
 pub type DS4_REPORT = _DS4_REPORT;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _XUSB_REQUEST_NOTIFICATION {
+    pub Size: ULONG,
+    pub SerialNo: ULONG,
+    pub LargeMotor: UCHAR,
+    pub SmallMotor: UCHAR,
+    pub LedNumber: UCHAR,
+}
+#[test]
+fn bindgen_test_layout__XUSB_REQUEST_NOTIFICATION() {
+    assert_eq!(
+        ::std::mem::size_of::<_XUSB_REQUEST_NOTIFICATION>(),
+        12usize,
+        concat!("Size of: ", stringify!(_XUSB_REQUEST_NOTIFICATION))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_XUSB_REQUEST_NOTIFICATION>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_XUSB_REQUEST_NOTIFICATION))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).Size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(Size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).SerialNo as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(SerialNo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).LargeMotor as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(LargeMotor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).SmallMotor as *const _ as usize
+        },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(SmallMotor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).LedNumber as *const _ as usize
+        },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(LedNumber)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _XUSB_SUBMIT_REPORT {
+    pub Size: ULONG,
+    pub SerialNo: ULONG,
+    pub Report: XUSB_REPORT,
+}
+#[test]
+fn bindgen_test_layout__XUSB_SUBMIT_REPORT() {
+    assert_eq!(
+        ::std::mem::size_of::<_XUSB_SUBMIT_REPORT>(),
+        20usize,
+        concat!("Size of: ", stringify!(_XUSB_SUBMIT_REPORT))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_XUSB_SUBMIT_REPORT>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_XUSB_SUBMIT_REPORT))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).Size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_SUBMIT_REPORT),
+            "::",
+            stringify!(Size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).SerialNo as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_SUBMIT_REPORT),
+            "::",
+            stringify!(SerialNo)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).Report as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_SUBMIT_REPORT),
+            "::",
+            stringify!(Report)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _XUSB_GET_USER_INDEX {
+    pub Size: ULONG,
+    pub SerialNo: ULONG,
+    pub UserIndex: ULONG,
+}
+#[test]
+fn bindgen_test_layout__XUSB_GET_USER_INDEX() {
+    assert_eq!(
+        ::std::mem::size_of::<_XUSB_GET_USER_INDEX>(),
+        12usize,
+        concat!("Size of: ", stringify!(_XUSB_GET_USER_INDEX))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_XUSB_GET_USER_INDEX>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_XUSB_GET_USER_INDEX))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).Size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_GET_USER_INDEX),
+            "::",
+            stringify!(Size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).SerialNo as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_GET_USER_INDEX),
+            "::",
+            stringify!(SerialNo)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).UserIndex as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_GET_USER_INDEX),
+            "::",
+            stringify!(UserIndex)
+        )
+    );
+}
 pub const _VIGEM_ERRORS_VIGEM_ERROR_NONE: _VIGEM_ERRORS = 536870912;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_BUS_NOT_FOUND: _VIGEM_ERRORS = -536870911;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_NO_FREE_SLOT: _VIGEM_ERRORS = -536870910;
@@ -1737,7 +1934,7 @@ pub const _VIGEM_ERRORS_VIGEM_ERROR_REMOVAL_FAILED: _VIGEM_ERRORS = -536870908;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_ALREADY_CONNECTED: _VIGEM_ERRORS = -536870907;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_TARGET_UNINITIALIZED: _VIGEM_ERRORS = -536870906;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_TARGET_NOT_PLUGGED_IN: _VIGEM_ERRORS = -536870905;
-pub const _VIGEM_ERRORS_VIGEM_ERROR_BUS_VERSION_MISMATCH: _VIGEM_ERRORS = -536870905;
+pub const _VIGEM_ERRORS_VIGEM_ERROR_BUS_VERSION_MISMATCH: _VIGEM_ERRORS = -536870904;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_BUS_ACCESS_FAILED: _VIGEM_ERRORS = -536870903;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_CALLBACK_ALREADY_REGISTERED: _VIGEM_ERRORS = -536870896;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_CALLBACK_NOT_FOUND: _VIGEM_ERRORS = -536870895;
@@ -1761,9 +1958,30 @@ pub type PVIGEM_CLIENT = *mut _VIGEM_CLIENT_T;
 #[doc = ""]
 #[doc = " \\brief   Defines an alias representing a target device object."]
 pub type PVIGEM_TARGET = *mut _VIGEM_TARGET_T;
+
 pub type PFN_VIGEM_TARGET_ADD_RESULT = ::std::option::Option<unsafe extern "C" fn()>;
-pub type PFN_VIGEM_X360_NOTIFICATION = ::std::option::Option<unsafe extern "C" fn()>;
-pub type PFN_VIGEM_DS4_NOTIFICATION = ::std::option::Option<unsafe extern "C" fn()>;
+pub type PFN_VIGEM_X360_NOTIFICATION = ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_X360_NOTIFICATION)>;
+pub type PFN_VIGEM_DS4_NOTIFICATION = ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_DS4_NOTIFICATION)>;
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct EVT_VIGEM_X360_NOTIFICATION {
+    pub LargeMotor: BYTE,
+    pub SmallMotor: BYTE,
+    pub LedNumber: BYTE,
+    pub UserData: LPVOID
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct EVT_VIGEM_DS4_NOTIFICATION {
+    pub LargeMotor: BYTE,
+    pub SmallMotor: BYTE,
+    pub LedNumber: BYTE,
+    pub UserData: LPVOID
+}
+
+
 extern "C" {
     #[doc = " \\fn  PVIGEM_CLIENT vigem_alloc(void);"]
     #[doc = ""]
@@ -2200,6 +2418,7 @@ pub const _VIGEM_TARGET_STATE_VIGEM_TARGET_INITIALIZED: _VIGEM_TARGET_STATE = 1;
 pub const _VIGEM_TARGET_STATE_VIGEM_TARGET_CONNECTED: _VIGEM_TARGET_STATE = 2;
 pub const _VIGEM_TARGET_STATE_VIGEM_TARGET_DISCONNECTED: _VIGEM_TARGET_STATE = 3;
 pub type _VIGEM_TARGET_STATE = i32;
+
 pub use self::_VIGEM_TARGET_STATE as VIGEM_TARGET_STATE;
 #[repr(C)]
 #[derive(Debug)]

@@ -14,9 +14,15 @@ pub fn main() {
     vigem.target_add(&target).unwrap();
     dbg!(target.state());
     dbg!(target.get_type());
-    vigem.target_remove(&target).unwrap();
-    dbg!(target.state());
+    dbg!(vigem.xbox_get_user_index(&target));
+    vigem.x360_register_notification(&target, handle).unwrap();
+    // vigem.x360_update(&target, XUSB_REPORT {})
+    std::thread::sleep(std::time::Duration::new(999999, 0));
 
     
 }
 
+
+unsafe extern "C" fn handle (data: vigem::binds::EVT_VIGEM_X360_NOTIFICATION) {
+    dbg!(data);
+}

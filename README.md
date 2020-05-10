@@ -28,4 +28,8 @@ Check examples directory
 - [x] `vigem_target_set_pid`
 - [x] `vigem_target_get_vid`
 - [x] `vigem_target_get_pid`
+- [x] `vigem_target_x360_get_user_index`
+- [x] `vigem_target_x360_update`
+
+
 - [ ] `vigem_target_add_async` - I dont know how to realize it (need help)

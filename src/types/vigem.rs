@@ -1,7 +1,9 @@
-use crate::binds::{PVIGEM_CLIENT, PVIGEM_TARGET, VIGEM_ERROR, _VIGEM_TARGET_STATE, _VIGEM_TARGET_TYPE};
-use lib::Library;
+use crate::binds::{
+    LPVOID, PFN_VIGEM_X360_NOTIFICATION, PULONG, PVIGEM_CLIENT, PVIGEM_TARGET, VIGEM_ERROR,
+    _VIGEM_TARGET_STATE, _VIGEM_TARGET_TYPE,EVT_VIGEM_X360_NOTIFICATION
+};
 use crate::types::target::Target;
-
+use lib::Library;
 
 pub struct Vigem {
     lib: Library,
@@ -18,7 +20,7 @@ impl Vigem {
     fn alloc(lib: &Library) -> PVIGEM_CLIENT {
         unsafe {
             let f: lib::Symbol<unsafe extern "C" fn() -> PVIGEM_CLIENT> =
-            lib.get(b"vigem_alloc").unwrap();
+                lib.get(b"vigem_alloc").unwrap();
             return f();
         }
     }
@@ -40,7 +42,7 @@ impl Vigem {
         unsafe {
             let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_CLIENT, PVIGEM_TARGET) -> VIGEM_ERROR> =
                 self.lib.get(b"vigem_target_add").unwrap();
-            let r =  f(self.vigem, target.raw);
+            let r = f(self.vigem, target.raw);
             let err = VigemError::new(r);
             if err.is_err() {
                 return Err(err);
@@ -54,13 +56,13 @@ impl Vigem {
         unsafe {
             let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_CLIENT, PVIGEM_TARGET) -> VIGEM_ERROR> =
                 self.lib.get(b"vigem_target_remove").unwrap();
-                let r =  f(self.vigem, target.raw);
-                let err = VigemError::new(r);
-                if err.is_err() {
-                    return Err(err);
-                } else {
-                    return Ok(());
-                }
+            let r = f(self.vigem, target.raw);
+            let err = VigemError::new(r);
+            if err.is_err() {
+                return Err(err);
+            } else {
+                return Ok(());
+            }
         }
     }
 
@@ -79,16 +81,70 @@ impl Vigem {
             return f(self.vigem);
         }
     }
-    
+
+    pub fn xbox_get_user_index(&mut self, target: &Target) -> u32 {
+        unsafe {
+            let mut index = 0u32;
+            let mut index_ptr: *mut u32 = &mut index;
+            let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_CLIENT, PVIGEM_TARGET, PULONG)> =
+                self.lib.get(b"vigem_target_x360_get_user_index").unwrap();
+            f(self.vigem, target.raw, index_ptr);
+            return index;
+        }
+    }
+
+    pub fn x360_update(&mut self, target: &Target, report: crate::XUSB_REPORT) -> Result<(), VigemError> {
+        unsafe {
+            let f: lib::Symbol<unsafe extern "C" fn(PVIGEM_CLIENT, PVIGEM_TARGET, crate::XUSB_REPORT) -> VIGEM_ERROR> =
+                self.lib.get(b"vigem_target_x360_update").unwrap();
+            let err =VigemError::new(f(self.vigem, target.raw, report));
+            if err.is_err() {
+                return Err(err);
+            } else {
+                return Ok(());
+            }
+
+        }
+    }
+
+    pub fn x360_register_notification(
+        &mut self,
+        target: &Target,
+        func: unsafe extern "C" fn(EVT_VIGEM_X360_NOTIFICATION),
+    ) -> Result<(), VigemError> {
+        unsafe {
+            let f: lib::Symbol<
+                unsafe extern "C" fn(
+                    PVIGEM_CLIENT,
+                    PVIGEM_TARGET,
+                    PFN_VIGEM_X360_NOTIFICATION,
+                    LPVOID,
+                ) -> VIGEM_ERROR,
+            > = self
+                .lib
+                .get(b"vigem_target_x360_register_notification")
+                .unwrap();
+
+            let data = 12;
+            let data_ptr = data as *mut i32;
+
+            let r = f(self.vigem, target.raw, Some(func), data_ptr.cast());
+            let err = VigemError::new(r);
+            if err.is_err() {
+                return Err(err);
+            } else {
+                return Ok(());
+            }
+        }
+    }
 }
 
 impl Drop for Vigem {
     fn drop(&mut self) {
-            self.disconnect();
-            self.free();
+        self.disconnect();
+        self.free();
     }
 }
-
 
 #[derive(Debug)]
 pub enum VigemError {

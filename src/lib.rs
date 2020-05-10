@@ -7,8 +7,7 @@ extern crate libloading as lib;
 pub mod binds;
 pub mod types;
 
-pub use binds as raw;
-
 pub use types::vigem::*;
 pub use types::target::*;
-
+pub use types::notification;
+pub use binds::{XUSB_REPORT, DS4_REPORT};
