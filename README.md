@@ -1,11 +1,11 @@
-# Vigem bindings for Rust!
+# 🎮 Vigem bindings for Rust! 🎮
 
 ### It's WIP
 
 ### Warning
 I cant link this lib (**need help**) so you have to move [dll for your  arch]("https://github.com/DuckerMan/vigem/blob/master/dlls/") to your `.exe` file catalog
 
-Other problem, that bindgen can generate right binding for `EVT_VIGEM_X360_NOTIFICATION` and `EVT_VIGEM_DS$_NOTIFICATION` so I also need help
+Other problem, that bindgen can generate right binding for `EVT_VIGEM_X360_NOTIFICATION` and `EVT_VIGEM_DS4_NOTIFICATION` so I also need help
 
 ### How to use?
 Check examples directory
@@ -32,6 +32,5 @@ Check examples directory
 - [x] `vigem_target_get_pid`
 - [x] `vigem_target_x360_get_user_index`
 - [x] `vigem_target_x360_update`
-
-
+- [ ] `vigem_register_notification` - In progress
 - [ ] `vigem_target_add_async` - I dont know how to realize it (need help)
