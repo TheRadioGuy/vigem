@@ -6,6 +6,10 @@
 use vigem::*;
 
 pub fn main() {
+
+    unsafe {
+        vigem::binds::vigem_alloc();
+    }
     let mut vigem = Vigem::new();
     vigem.connect().unwrap();
 

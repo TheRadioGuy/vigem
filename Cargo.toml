@@ -18,5 +18,3 @@ lto = true
 [profile.dev]
 codegen-units = 3
 
-[build-dependencies]
-bindgen = "0.51"
