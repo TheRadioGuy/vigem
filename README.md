@@ -3,7 +3,9 @@
 ### It's WIP
 
 ### Warning
-I cant link this lib (**need help**) so you have to move [dll for your  arch]("https://github.com/DuckerMan/vigem/blob/master/dlls/") to your `.exe` file catalog
+~~I cant link this lib (**need help**) so you have to move [dll for your  arch]("https://github.com/DuckerMan/vigem/blob/master/dlls/") to your `.exe` file catalog~~
+
+**Now you can just add create in dependencies and just use it!**(thanks `Michael-F-Bryan`)
 
 Other problem, that bindgen can generate right binding for `EVT_VIGEM_X360_NOTIFICATION` and `EVT_VIGEM_DS4_NOTIFICATION` so I also need help
 

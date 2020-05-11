@@ -3,7 +3,6 @@
 #![allow(non_snake_case)]
 #![allow(dead_code)]
 
-extern crate libloading as lib;
 pub mod binds;
 pub mod types;
 

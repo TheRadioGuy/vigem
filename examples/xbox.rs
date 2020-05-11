@@ -6,10 +6,6 @@
 use vigem::*;
 
 pub fn main() {
-
-    unsafe {
-        vigem::binds::vigem_alloc();
-    }
     let mut vigem = Vigem::new();
     vigem.connect().unwrap();
 
@@ -19,8 +15,7 @@ pub fn main() {
     dbg!(target.state());
     dbg!(target.get_type());
     dbg!(vigem.xbox_get_user_index(&target));
-    vigem.x360_register_notification(&target, handle).unwrap();
-    // vigem.x360_update(&target, XUSB_REPORT {})
+    vigem.x360_register_notification(&target, handle, 11).unwrap();
     std::thread::sleep(std::time::Duration::new(999999, 0));
 
     
