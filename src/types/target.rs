@@ -11,7 +11,7 @@ pub struct Target {
 
 impl Target {
     pub fn new(tt: TargetType) -> Self {
-        let lib = lib::Library::new("VigemClient_x64.dll").unwrap();
+        let lib = lib::Library::new(crate::types::consts::DLL_NAME).unwrap();
         let mut raw;
         match tt {
             TargetType::Xbox360 => {

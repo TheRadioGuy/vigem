@@ -12,12 +12,17 @@ pub struct Vigem {
 
 impl Vigem {
     pub fn new() -> Self {
-        let lib = lib::Library::new("VigemClient_x64.dll").unwrap();
+        let lib = lib::Library::new(crate::types::consts::DLL_NAME).unwrap();
         let vigem = Vigem::alloc(&lib);
         Self { lib, vigem }
     }
 
-    fn alloc(lib: &Library) -> PVIGEM_CLIENT {
+    pub fn from_raw(vigem: PVIGEM_CLIENT) -> Self {
+        let lib = lib::Library::new(crate::types::consts::DLL_NAME).unwrap();
+        Self { lib, vigem }
+    }
+
+    pub fn alloc(lib: &Library) -> PVIGEM_CLIENT {
         unsafe {
             let f: lib::Symbol<unsafe extern "C" fn() -> PVIGEM_CLIENT> =
                 lib.get(b"vigem_alloc").unwrap();
