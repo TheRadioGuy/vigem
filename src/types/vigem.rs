@@ -1,19 +1,19 @@
-
-use crate::types::target::Target;
 use crate::binds::*;
+use crate::types::target::Target;
 
 pub struct Vigem {
-    vigem: PVIGEM_CLIENT,
+    pub vigem: PVIGEM_CLIENT,
+    drop: bool
 }
 
 impl Vigem {
     pub fn new() -> Self {
-        let vigem = unsafe{ vigem_alloc()};
-        Self { vigem }
+        let vigem = unsafe { vigem_alloc() };
+        Self { vigem, drop: true }
     }
 
     pub fn from_raw(vigem: PVIGEM_CLIENT) -> Self {
-        Self { vigem }
+        Self { vigem, drop: false }
     }
 
     pub fn connect(&mut self) -> Result<(), VigemError> {
@@ -39,6 +39,19 @@ impl Vigem {
             }
         }
     }
+
+    pub fn add_async(&mut self, target: &Target, func: PFN_VIGEM_TARGET_ADD_RESULT) -> Result<(), VigemError> {
+        unsafe {
+            let err = vigem_target_add_async(self.vigem, target.raw, func);
+            let err = VigemError::new(err);
+            if err.is_err() {
+                return Err(err);
+            } else {
+                return Ok(());
+            }
+        }
+    }
+    
 
     pub fn target_remove(&mut self, target: &Target) -> Result<(), VigemError> {
         unsafe {
@@ -74,7 +87,11 @@ impl Vigem {
     }
 
     // TODO: Make other  struct for REPORT
-    pub fn x360_update(&mut self, target: &Target, report: crate::XUSB_REPORT) -> Result<(), VigemError> {
+    pub fn x360_update(
+        &mut self,
+        target: &Target,
+        report: crate::binds::XUSB_REPORT,
+    ) -> Result<(), VigemError> {
         unsafe {
             let err = vigem_target_x360_update(self.vigem, target.raw, report);
             let err = VigemError::new(err);
@@ -83,33 +100,62 @@ impl Vigem {
             } else {
                 return Ok(());
             }
-
         }
     }
 
     pub fn x360_register_notification(
         &mut self,
         target: &Target,
-        func: unsafe extern "C" fn(EVT_VIGEM_X360_NOTIFICATION),
-        data: i32
+        func: PFN_VIGEM_X360_NOTIFICATION,
+        data: i32,
     ) -> Result<(), VigemError> {
         unsafe {
             let data_ptr = data as *mut i32;
-            let err = vigem_target_x360_register_notification(self.vigem, target.raw, Some(func), data_ptr.cast());
+            let err = vigem_target_x360_register_notification(
+                self.vigem,
+                target.raw,
+                func,
+                data_ptr.cast(),
+            );
             let err = VigemError::new(err);
             if err.is_err() {
                 return Err(err);
             } else {
                 return Ok(());
             }
-        }
+        }   
+    }
+
+    pub fn ds4_register_notification(
+        &mut self,
+        target: &Target,
+        func: unsafe extern "C" fn(EVT_VIGEM_DS4_NOTIFICATION),
+        data: i32,
+    ) -> Result<(), VigemError> {
+        unsafe {
+            let data_ptr = data as *mut i32;
+            let err = vigem_target_ds4_register_notification(
+                self.vigem,
+                target.raw,
+                Some(func),
+                data_ptr.cast(),
+            );
+            let err = VigemError::new(err);
+            if err.is_err() {
+                return Err(err);
+            } else {
+                return Ok(());
+            }
+        }   
     }
 }
 
 impl Drop for Vigem {
     fn drop(&mut self) {
-        self.disconnect();
-        self.free();
+        if self.drop {
+            self.disconnect();
+            self.free();
+        }
     }
 }
 

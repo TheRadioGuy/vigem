@@ -1,4 +1,4 @@
-pub mod vigem;
-pub mod target;
+pub(crate) mod consts;
 pub mod notification;
-pub (crate) mod consts;
+pub mod target;
+pub mod vigem;

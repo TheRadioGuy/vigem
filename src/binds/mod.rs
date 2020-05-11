@@ -1959,17 +1959,29 @@ pub type PVIGEM_CLIENT = *mut _VIGEM_CLIENT_T;
 #[doc = " \\brief   Defines an alias representing a target device object."]
 pub type PVIGEM_TARGET = *mut _VIGEM_TARGET_T;
 
-pub type PFN_VIGEM_TARGET_ADD_RESULT = ::std::option::Option<unsafe extern "C" fn()>;
-pub type PFN_VIGEM_X360_NOTIFICATION = ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_X360_NOTIFICATION)>;
-pub type PFN_VIGEM_DS4_NOTIFICATION = ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_DS4_NOTIFICATION)>;
+pub type PFN_VIGEM_TARGET_ADD_RESULT = ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_TARGET_ADD_RESULT)>;
+pub type PFN_VIGEM_X360_NOTIFICATION =
+    ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_X360_NOTIFICATION)>;
+pub type PFN_VIGEM_DS4_NOTIFICATION =
+    ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_DS4_NOTIFICATION)>;
+
+    #[repr(C)]
+    #[derive(Debug, Copy, Clone)]
+pub struct EVT_VIGEM_TARGET_ADD_RESULT {
+    pub Result: VIGEM_ERROR,
+    pub Client: PVIGEM_CLIENT,
+    pub Target: PVIGEM_TARGET,
+}
 
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct EVT_VIGEM_X360_NOTIFICATION {
     pub LargeMotor: BYTE,
+    pub Client: PVIGEM_CLIENT,
+    pub Target: PVIGEM_TARGET,
     pub SmallMotor: BYTE,
     pub LedNumber: BYTE,
-    pub UserData: LPVOID
+    pub UserData: LPVOID,
 }
 
 #[repr(C)]
@@ -1977,10 +1989,19 @@ pub struct EVT_VIGEM_X360_NOTIFICATION {
 pub struct EVT_VIGEM_DS4_NOTIFICATION {
     pub LargeMotor: BYTE,
     pub SmallMotor: BYTE,
-    pub LedNumber: BYTE,
-    pub UserData: LPVOID
+    pub LightBar: DS4_LIGHTBAR_COLOR,
+    pub UserData: LPVOID,
+    pub Client: PVIGEM_CLIENT,
+    pub Target: PVIGEM_TARGET,
 }
 
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct DS4_LIGHTBAR_COLOR {
+    pub Red: UCHAR,
+    pub Green: UCHAR,
+    pub Blue: UCHAR
+}
 
 extern "C" {
     #[doc = " \\fn  PVIGEM_CLIENT vigem_alloc(void);"]

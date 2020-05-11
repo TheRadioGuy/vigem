@@ -6,7 +6,7 @@
 pub mod binds;
 pub mod types;
 
-pub use types::vigem::*;
-pub use types::target::*;
+pub use binds as raw;
 pub use types::notification;
-pub use binds::{XUSB_REPORT, DS4_REPORT};
+pub use types::target::*;
+pub use types::vigem::*;

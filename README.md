@@ -22,6 +22,7 @@ Check examples directory
 - [x] `vigem_target_ds4_alloc`
 - [x] `vigem_target_free`
 - [x] `vigem_target_add`
+- [x] `vigem_target_add_async` - Need help to add async/await support
 - [x] `vigem_target_remove`
 - [x] `vigem_target_get_index`
 - [x] `vigem_target_get_type`
@@ -33,6 +34,5 @@ Check examples directory
 - [x] `vigem_target_get_vid`
 - [x] `vigem_target_get_pid`
 - [x] `vigem_target_x360_get_user_index`
-- [x] `vigem_target_x360_update`
-- [ ] `vigem_register_notification` - In progress
-- [ ] `vigem_target_add_async` - I dont know how to realize it (need help)
+- [x] `vigem_register_notification`
+- [ ] `vigem_target_update` - Need revision

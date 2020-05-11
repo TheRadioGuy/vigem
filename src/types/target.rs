@@ -1,24 +1,25 @@
-
 use crate::binds::*;
 
-
+/// It's a safe abstraction over `PVIGEM_TARGET`
+/// Note: If you use from_raw, dont forget to manually call `target.free()` or you will die
 pub struct Target {
-    pub raw: PVIGEM_TARGET
+    pub raw: PVIGEM_TARGET,
+    drop: bool
 }
 
 impl Target {
     pub fn new(tt: TargetType) -> Self {
-        let mut raw;
+        let raw;
         match tt {
-            TargetType::Xbox360 => {
-                raw = unsafe{vigem_target_x360_alloc()}
-            }
-            TargetType::DualShock4 => {
-                raw = unsafe{vigem_target_ds4_alloc()}
-            }
+            TargetType::Xbox360 => raw = unsafe { vigem_target_x360_alloc() },
+            TargetType::DualShock4 => raw = unsafe { vigem_target_ds4_alloc() },
         }
 
-        Self {raw}
+        Self { raw, drop: true }
+    }
+
+    pub fn from_raw(target: PVIGEM_TARGET) -> Self {
+        Self{raw: target, drop: false}
     }
 
     pub fn size(&self) -> u32 {
@@ -64,7 +65,7 @@ impl Target {
     pub fn index(&self) -> u32 {
         unsafe {
             let index = vigem_target_get_index(self.raw);
-            return  index;
+            return index;
         }
     }
 
@@ -72,17 +73,17 @@ impl Target {
         unsafe {
             return match vigem_target_is_attached(self.raw) {
                 1 => true,
-                _ => false
-            }
+                _ => false,
+            };
         }
     }
 
-    pub fn unregister_notification(&self){
+    pub fn unregister_notification(&self) {
         unsafe {
             return match self.get_type() {
                 TargetType::Xbox360 => vigem_target_x360_unregister_notification(self.raw),
-                TargetType::DualShock4 => vigem_target_ds4_unregister_notification(self.raw)
-            }
+                TargetType::DualShock4 => vigem_target_ds4_unregister_notification(self.raw),
+            };
         }
     }
 
@@ -98,7 +99,7 @@ impl Target {
         }
     }
 
-    fn target_free(&mut self) {
+    pub fn free(&mut self) {
         unsafe {
             vigem_target_free(self.raw);
         }
@@ -108,7 +109,10 @@ impl Target {
 impl Drop for Target {
     /// Always drop a target - we are good boys
     fn drop(&mut self) {
-        self.target_free();
+
+        if self.drop {
+            self.free();
+        }
     }
 }
 
@@ -144,7 +148,7 @@ impl TargetState {
             1 => Initialized,
             2 => Connected,
             3 => Disconnected,
-            _ => unreachable!(),
+            _ => {println!("{}", s); unreachable!()},
         }
     }
 }

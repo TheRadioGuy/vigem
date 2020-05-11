@@ -13,15 +13,21 @@ pub fn main() {
     dbg!(target.state());
     vigem.target_add(&target).unwrap();
     dbg!(target.state());
-    dbg!(target.get_type());
     dbg!(vigem.xbox_get_user_index(&target));
-    vigem.x360_register_notification(&target, handle, 11).unwrap();
+    vigem
+        .x360_register_notification(&target, Some(handle), 11)
+        .unwrap();
+    unsafe { dbg!((*target.raw).State) };
     std::thread::sleep(std::time::Duration::new(999999, 0));
-
-    
 }
 
+unsafe extern "C" fn handle(data: vigem::raw::EVT_VIGEM_X360_NOTIFICATION) {
+        println!("still get info");
+        let notification = notification::X360Notification::from_raw(data);
+        dbg!(notification.large_motor);
+        let target = notification.get_target();
+        if target.is_ok() {
+            dbg!(target.unwrap().state());
+        }
 
-unsafe extern "C" fn handle (data: vigem::binds::EVT_VIGEM_X360_NOTIFICATION) {
-    dbg!(data);
-}
+    }
