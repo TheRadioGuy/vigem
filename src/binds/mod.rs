@@ -1961,7 +1961,7 @@ pub type PVIGEM_TARGET = *mut _VIGEM_TARGET_T;
 
 pub type PFN_VIGEM_TARGET_ADD_RESULT = ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_TARGET_ADD_RESULT)>;
 pub type PFN_VIGEM_X360_NOTIFICATION =
-    ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_X360_NOTIFICATION)>;
+    ::std::option::Option<unsafe extern "C" fn(*mut EVT_VIGEM_X360_NOTIFICATION)>;
 pub type PFN_VIGEM_DS4_NOTIFICATION =
     ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_DS4_NOTIFICATION)>;
 
@@ -2456,6 +2456,13 @@ pub struct _VIGEM_TARGET_T {
     pub cancelNotificationThreadEvent: HANDLE,
     pub notificationThreadList: std_unique_ptr,
 }
+
+impl Drop for _VIGEM_TARGET_T {
+    fn drop(&mut self){
+        println!("DROP THE TARGET!!!!");
+    }
+}
+
 #[test]
 fn bindgen_test_layout__VIGEM_TARGET_T() {
     assert_eq!(

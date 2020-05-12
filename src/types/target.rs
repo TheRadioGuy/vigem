@@ -2,8 +2,9 @@ use crate::binds::*;
 
 /// It's a safe abstraction over `PVIGEM_TARGET`
 /// Note: If you use from_raw, dont forget to manually call `target.free()` or you will die
+#[derive(Debug)]
 pub struct Target {
-    pub raw: PVIGEM_TARGET,
+    pub raw: Box<PVIGEM_TARGET>,
     drop: bool
 }
 
@@ -15,38 +16,38 @@ impl Target {
             TargetType::DualShock4 => raw = unsafe { vigem_target_ds4_alloc() },
         }
 
-        Self { raw, drop: true }
+        Self { raw:Box::new(raw), drop: true }
     }
 
     pub fn from_raw(target: PVIGEM_TARGET) -> Self {
-        Self{raw: target, drop: false}
+        Self{raw: Box::new(target), drop: false}
     }
 
     pub fn size(&self) -> u32 {
-        unsafe { (*self.raw).Size }
+        unsafe { (*(*self.raw)).Size }
     }
 
     pub fn serial_no(&self) -> u32 {
-        unsafe { (*self.raw).SerialNo }
+        unsafe { (*(*self.raw)).SerialNo }
     }
 
     pub fn state(&self) -> TargetState {
-        unsafe { TargetState::new((*self.raw).State) }
+        unsafe {TargetState::new((*(*self.raw)).State) }
     }
 
     pub fn get_vid(&self) -> u16 {
-        unsafe { (*self.raw).VendorId }
+        unsafe { (*(*self.raw)).VendorId }
     }
     pub fn get_pid(&self) -> u16 {
-        unsafe { (*self.raw).ProductId }
+        unsafe { (*(*self.raw)).ProductId }
     }
 
     pub fn get_type(&self) -> TargetType {
-        unsafe { TargetType::new((*self.raw).Type) }
+        unsafe { TargetType::new((*(*self.raw)).Type) }
     }
 
     pub fn closing_notification_threads(&self) -> bool {
-        unsafe { (*self.raw).closingNotificationThreads }
+        unsafe { (*(*self.raw)).closingNotificationThreads }
     }
 
     // pub fn notification(&self) -> u32 {
@@ -64,14 +65,14 @@ impl Target {
 
     pub fn index(&self) -> u32 {
         unsafe {
-            let index = vigem_target_get_index(self.raw);
+            let index = vigem_target_get_index(*self.raw);
             return index;
         }
     }
 
     pub fn is_attached(&self) -> bool {
         unsafe {
-            return match vigem_target_is_attached(self.raw) {
+            return match vigem_target_is_attached(*self.raw) {
                 1 => true,
                 _ => false,
             };
@@ -81,27 +82,27 @@ impl Target {
     pub fn unregister_notification(&self) {
         unsafe {
             return match self.get_type() {
-                TargetType::Xbox360 => vigem_target_x360_unregister_notification(self.raw),
-                TargetType::DualShock4 => vigem_target_ds4_unregister_notification(self.raw),
+                TargetType::Xbox360 => vigem_target_x360_unregister_notification(*self.raw),
+                TargetType::DualShock4 => vigem_target_ds4_unregister_notification(*self.raw),
             };
         }
     }
 
     pub fn set_vid(&self, vid: u16) {
         unsafe {
-            vigem_target_set_vid(self.raw, vid);
+            vigem_target_set_vid(*self.raw, vid);
         }
     }
 
     pub fn set_pid(&self, pid: u16) {
         unsafe {
-            vigem_target_set_pid(self.raw, pid);
+            vigem_target_set_pid(*self.raw, pid);
         }
     }
 
     pub fn free(&mut self) {
         unsafe {
-            vigem_target_free(self.raw);
+            vigem_target_free(*self.raw);
         }
     }
 }
@@ -138,6 +139,7 @@ pub enum TargetState {
     Initialized,
     Connected,
     Disconnected,
+    Unknown
 }
 
 impl TargetState {
@@ -148,7 +150,7 @@ impl TargetState {
             1 => Initialized,
             2 => Connected,
             3 => Disconnected,
-            _ => {println!("{}", s); unreachable!()},
+            _ => Unknown
         }
     }
 }

@@ -14,20 +14,15 @@ pub fn main() {
     vigem.target_add(&target).unwrap();
     dbg!(target.state());
     dbg!(vigem.xbox_get_user_index(&target));
+    println!("Pointer to target: {:p}", target.raw);
     vigem
         .x360_register_notification(&target, Some(handle), 11)
         .unwrap();
-    unsafe { dbg!((*target.raw).State) };
     std::thread::sleep(std::time::Duration::new(999999, 0));
 }
 
-unsafe extern "C" fn handle(data: vigem::raw::EVT_VIGEM_X360_NOTIFICATION) {
+unsafe extern "C" fn handle(data: *mut vigem::raw::EVT_VIGEM_X360_NOTIFICATION) {
         println!("still get info");
-        let notification = notification::X360Notification::from_raw(data);
-        dbg!(notification.large_motor);
-        let target = notification.get_target();
-        if target.is_ok() {
-            dbg!(target.unwrap().state());
-        }
-
-    }
+        println!("Pointer to data: {:p}", data);
+        println!("Data itself is: {:?}", *data);
+ }

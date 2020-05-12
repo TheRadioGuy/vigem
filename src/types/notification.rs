@@ -1,32 +1,55 @@
 use crate::binds::*;
+use crate::types::target::{Target, TargetState};
 use crate::types::vigem::Vigem;
-use crate::types::target::Target;
 
+#[derive(Debug)]
 pub struct X360Notification {
-    pub raw: EVT_VIGEM_X360_NOTIFICATION,
     pub large_motor: u8,
     pub small_motor: u8,
-    pub led_number: u8
+    pub led_number: u8,
 }
 
 impl X360Notification {
-    pub fn from_raw(raw: EVT_VIGEM_X360_NOTIFICATION) -> Self {
-        Self{raw, large_motor: raw.LargeMotor, small_motor: raw.SmallMotor, led_number: raw.LedNumber}
-    }
-
-    pub fn get_client(&self) -> Result<Vigem , ()> {
-        if self.raw.Client.is_null(){
-           return Err(());
-        } else {
-            return Ok(Vigem::from_raw(self.raw.Client));
+    pub fn from_raw(raw: *mut EVT_VIGEM_X360_NOTIFICATION) -> Self {
+        unsafe {
+            let raw = *raw;
+            return Self {
+                large_motor: raw.LargeMotor,
+                small_motor: raw.SmallMotor,
+                led_number: raw.LedNumber,
+            };
         }
     }
+}
 
-    pub fn get_target(&self) -> Result<Target , ()> {
-        if self.raw.Target.is_null(){
-           return Err(());
-        } else {
-            return Ok(Target::from_raw(self.raw.Target));
+pub struct DS4Notification {
+    pub large_motor: u8,
+    pub small_motor: u8,
+    pub light_bar: LIGHTBAR_COLOR,
+}
+
+pub struct LIGHTBAR_COLOR {
+    red: u8,
+    green: u8,
+    blue: u8
+}
+
+impl LIGHTBAR_COLOR {
+    pub fn new(red:u8,green:u8,blue:u8) -> Self {
+        Self{red, green, blue}
+    }
+}
+
+impl DS4Notification {
+    pub fn from_raw(raw: *mut EVT_VIGEM_DS4_NOTIFICATION) -> Self {
+        unsafe {
+            let raw = *raw;
+            let light_bar = raw.LightBar;
+            return Self {
+                large_motor: raw.LargeMotor,
+                small_motor: raw.SmallMotor,
+                light_bar: LIGHTBAR_COLOR::new(light_bar.Red, light_bar.Green, light_bar.Blue),
+            };
         }
     }
 }

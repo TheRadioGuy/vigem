@@ -2,23 +2,23 @@ use crate::binds::*;
 use crate::types::target::Target;
 
 pub struct Vigem {
-    pub vigem: PVIGEM_CLIENT,
+    pub vigem: Box<PVIGEM_CLIENT>,
     drop: bool
 }
 
 impl Vigem {
     pub fn new() -> Self {
         let vigem = unsafe { vigem_alloc() };
-        Self { vigem, drop: true }
+        Self { vigem: Box::new(vigem), drop: true }
     }
 
     pub fn from_raw(vigem: PVIGEM_CLIENT) -> Self {
-        Self { vigem, drop: false }
+        Self { vigem: Box::new(vigem), drop: false }
     }
 
     pub fn connect(&mut self) -> Result<(), VigemError> {
         unsafe {
-            let err = vigem_connect(self.vigem);
+            let err = vigem_connect(*self.vigem);
             let err = VigemError::new(err);
             if err.is_err() {
                 return Err(err);
@@ -30,7 +30,7 @@ impl Vigem {
 
     pub fn target_add(&mut self, target: &Target) -> Result<(), VigemError> {
         unsafe {
-            let err = vigem_target_add(self.vigem, target.raw);
+            let err = vigem_target_add(*self.vigem, *target.raw);
             let err = VigemError::new(err);
             if err.is_err() {
                 return Err(err);
@@ -42,7 +42,7 @@ impl Vigem {
 
     pub fn add_async(&mut self, target: &Target, func: PFN_VIGEM_TARGET_ADD_RESULT) -> Result<(), VigemError> {
         unsafe {
-            let err = vigem_target_add_async(self.vigem, target.raw, func);
+            let err = vigem_target_add_async(*self.vigem, *target.raw, func);
             let err = VigemError::new(err);
             if err.is_err() {
                 return Err(err);
@@ -55,7 +55,7 @@ impl Vigem {
 
     pub fn target_remove(&mut self, target: &Target) -> Result<(), VigemError> {
         unsafe {
-            let err = vigem_target_remove(self.vigem, target.raw);
+            let err = vigem_target_remove(*self.vigem, *target.raw);
             let err = VigemError::new(err);
             if err.is_err() {
                 return Err(err);
@@ -67,13 +67,13 @@ impl Vigem {
 
     pub fn free(&mut self) {
         unsafe {
-            vigem_free(self.vigem);
+            vigem_free(*self.vigem);
         }
     }
 
     pub fn disconnect(&mut self) {
         unsafe {
-            vigem_disconnect(self.vigem);
+            vigem_disconnect(*self.vigem);
         }
     }
 
@@ -81,7 +81,7 @@ impl Vigem {
         unsafe {
             let mut index = 0u32;
             let mut index_ptr: *mut u32 = &mut index;
-            vigem_target_x360_get_user_index(self.vigem, target.raw, index_ptr);
+            vigem_target_x360_get_user_index(*self.vigem, *target.raw, index_ptr);
             return index;
         }
     }
@@ -93,7 +93,7 @@ impl Vigem {
         report: crate::binds::XUSB_REPORT,
     ) -> Result<(), VigemError> {
         unsafe {
-            let err = vigem_target_x360_update(self.vigem, target.raw, report);
+            let err = vigem_target_x360_update(*self.vigem, *target.raw, report);
             let err = VigemError::new(err);
             if err.is_err() {
                 return Err(err);
@@ -103,6 +103,7 @@ impl Vigem {
         }
     }
 
+    /// TODO: Add custom user_data
     pub fn x360_register_notification(
         &mut self,
         target: &Target,
@@ -112,8 +113,8 @@ impl Vigem {
         unsafe {
             let data_ptr = data as *mut i32;
             let err = vigem_target_x360_register_notification(
-                self.vigem,
-                target.raw,
+                *self.vigem,
+                *target.raw,
                 func,
                 data_ptr.cast(),
             );
@@ -135,8 +136,8 @@ impl Vigem {
         unsafe {
             let data_ptr = data as *mut i32;
             let err = vigem_target_ds4_register_notification(
-                self.vigem,
-                target.raw,
+                *self.vigem,
+                *target.raw,
                 Some(func),
                 data_ptr.cast(),
             );
