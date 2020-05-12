@@ -36,3 +36,4 @@ Check examples directory
 - [x] `vigem_target_x360_get_user_index`
 - [x] `vigem_register_notification`
 - [x] `vigem_target_update` - **IF you use `.Client` or `.Target`  from `EVT_VIGEM_X360_NOTIFICATION` there's a chance of segfault, and I dont know to fix it
+- [ ] `vigem_target_send_report` - It's the last function, and it's in progress
