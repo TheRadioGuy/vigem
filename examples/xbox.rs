@@ -18,8 +18,24 @@ pub fn main() {
     dbg!(vigem.xbox_get_user_index(&target));
     println!("Pointer to target: {:p}", target.raw);
     vigem
-        .x360_register_notification(&target, Some(handle), 123)
+        .x360_register_notification::<i32>(&target, Some(handle), 123123123)
         .unwrap();
+
+    // loop {
+    //     let mut report = XUSBReport::default();
+    //     report.w_buttons = XButton::X;
+    //     vigem.x360_update(&target, report).unwrap();
+    // }
+
+    let mut report = XUSBReport::default();
+    report.w_buttons = XButton::X;
+    println!("Send X");
+    vigem.x360_update(&target, &report).unwrap();
+    std::thread::sleep(std::time::Duration::new(5, 0));
+    report.w_buttons = XButton::Y;
+    println!("Send Y ");
+    vigem.x360_update(&target, &report).unwrap();
+
     std::thread::sleep(std::time::Duration::new(999999, 0));
 }
 

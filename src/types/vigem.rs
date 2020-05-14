@@ -1,5 +1,5 @@
 use crate::binds::*;
-use crate::types::target::Target;
+use crate::types::target::{Target, TargetType};
 
 pub struct Vigem {
     pub vigem: Box<PVIGEM_CLIENT>,
@@ -69,7 +69,7 @@ impl Vigem {
     pub fn xbox_get_user_index(&mut self, target: &Target) -> u32 {
         unsafe {
             let mut index = 0u32;
-            let mut index_ptr: *mut u32 = &mut index;
+            let index_ptr: *mut u32 = &mut index;
             vigem_target_x360_get_user_index(*self.vigem, *target.raw, index_ptr);
             return index;
         }
@@ -78,7 +78,7 @@ impl Vigem {
     pub fn x360_update(
         &mut self,
         target: &Target,
-        report: crate::types::button::XUSBReport,
+        report: &crate::types::button::XUSBReport,
     ) -> Result<(), VigemError> {
         unsafe {
             let err = vigem_target_x360_update(*self.vigem, *target.raw, report.to_raw());
@@ -89,11 +89,18 @@ impl Vigem {
     pub fn ds4_update(
         &mut self,
         target: &Target,
-        report: crate::types::button::DSReport,
+        report: &crate::types::button::DSReport,
     ) -> Result<(), VigemError> {
         unsafe {
             let err = vigem_target_ds4_update(*self.vigem, *target.raw, report.to_raw());
             VigemError::new(err).to_result()
+        }
+    }
+
+    pub fn clean(&mut self, target: &Target) -> Result<(), VigemError>{
+        match target.get_type() {
+            TargetType::Xbox360 => self.x360_update(target, &crate::types::button::XUSBReport::default()),
+            TargetType::DualShock4 => self.ds4_update(target, &crate::types::button::DSReport::default())
         }
     }
 

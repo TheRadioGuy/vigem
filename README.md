@@ -38,3 +38,4 @@ Right now I'm writing my own documentation, so as for now you can check the exam
 
 # Plans:
 - [ ] Documentation(in progress)
+- [ ] Macro for more comfortable using
