@@ -8,6 +8,7 @@ readme = "README.md"
 repository = "https://github.com/DuckerMan/vigem"
 keywords = ["rust", "vigem", "xbox360", "xbox"]
 license = "GPL-3.0-or-later"
+exclude = ["target", "src/binds/*.h", "src/binds/*.cpp"]
 
 [dependencies]
 
