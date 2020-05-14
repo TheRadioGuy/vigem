@@ -34,4 +34,7 @@ Right now I'm writing my own documentation, so as for now you can check the exam
 - [x] `vigem_target_x360_get_user_index`
 - [x] `vigem_register_notification`
 - [x] `vigem_target_update`
-- [ ] `vigem_target_send_report` - It's the last function, and it's in progress
+- [x] `vigem_target_send_report`
+
+# Plans:
+- [ ] Documentation(in progress)

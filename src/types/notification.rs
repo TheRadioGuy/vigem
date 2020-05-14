@@ -21,7 +21,6 @@ impl<T: Sized> X360Notification<T> {
         led_number: UCHAR,
         user_data: LPVOID,
     ) -> Self {
-        unsafe {
             let user_data: *mut T = user_data.cast();
             return Self {
                 large_motor,
@@ -31,7 +30,6 @@ impl<T: Sized> X360Notification<T> {
                 client: Box::new(client),
                 target: Box::new(target),
             };
-        }
     }
 
     pub fn get_target(&self) -> Target {
@@ -86,7 +84,6 @@ impl<T: Sized> DS4Notification<T> {
         light_bar: DS4_LIGHTBAR_COLOR,
         user_data: LPVOID,
     ) -> Self {
-        unsafe {
             let user_data: *mut T = user_data.cast();
             return Self {
                 large_motor,
@@ -96,7 +93,6 @@ impl<T: Sized> DS4Notification<T> {
                 client: Box::new(client),
                 target: Box::new(target),
             };
-        }
     }
 
     pub fn get_target(&self) -> Target {

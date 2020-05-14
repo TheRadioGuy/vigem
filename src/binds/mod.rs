@@ -1529,6 +1529,22 @@ pub const _VIGEM_TARGET_TYPE_Xbox360Wired: _VIGEM_TARGET_TYPE = 0;
 pub const _VIGEM_TARGET_TYPE_DualShock4Wired: _VIGEM_TARGET_TYPE = 2;
 pub type _VIGEM_TARGET_TYPE = i32;
 pub use self::_VIGEM_TARGET_TYPE as VIGEM_TARGET_TYPE;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_UP: _XUSB_BUTTON = 1;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_DOWN: _XUSB_BUTTON = 2;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_LEFT: _XUSB_BUTTON = 4;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_RIGHT: _XUSB_BUTTON = 8;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_START: _XUSB_BUTTON = 16;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_BACK: _XUSB_BUTTON = 32;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_LEFT_THUMB: _XUSB_BUTTON = 64;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_RIGHT_THUMB: _XUSB_BUTTON = 128;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_LEFT_SHOULDER: _XUSB_BUTTON = 256;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_RIGHT_SHOULDER: _XUSB_BUTTON = 512;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_GUIDE: _XUSB_BUTTON = 1024;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_A: _XUSB_BUTTON = 4096;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_B: _XUSB_BUTTON = 8192;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_X: _XUSB_BUTTON = 16384;
+pub const _XUSB_BUTTON_XUSB_GAMEPAD_Y: _XUSB_BUTTON = 32768;
+pub type _XUSB_BUTTON = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _XUSB_REPORT {
@@ -1675,6 +1691,32 @@ fn bindgen_test_layout__DS4_LIGHTBAR_COLOR() {
     );
 }
 pub type DS4_LIGHTBAR_COLOR = _DS4_LIGHTBAR_COLOR;
+pub const _DS4_BUTTONS_DS4_BUTTON_THUMB_RIGHT: _DS4_BUTTONS = 32768;
+pub const _DS4_BUTTONS_DS4_BUTTON_THUMB_LEFT: _DS4_BUTTONS = 16384;
+pub const _DS4_BUTTONS_DS4_BUTTON_OPTIONS: _DS4_BUTTONS = 8192;
+pub const _DS4_BUTTONS_DS4_BUTTON_SHARE: _DS4_BUTTONS = 4096;
+pub const _DS4_BUTTONS_DS4_BUTTON_TRIGGER_RIGHT: _DS4_BUTTONS = 2048;
+pub const _DS4_BUTTONS_DS4_BUTTON_TRIGGER_LEFT: _DS4_BUTTONS = 1024;
+pub const _DS4_BUTTONS_DS4_BUTTON_SHOULDER_RIGHT: _DS4_BUTTONS = 512;
+pub const _DS4_BUTTONS_DS4_BUTTON_SHOULDER_LEFT: _DS4_BUTTONS = 256;
+pub const _DS4_BUTTONS_DS4_BUTTON_TRIANGLE: _DS4_BUTTONS = 128;
+pub const _DS4_BUTTONS_DS4_BUTTON_CIRCLE: _DS4_BUTTONS = 64;
+pub const _DS4_BUTTONS_DS4_BUTTON_CROSS: _DS4_BUTTONS = 32;
+pub const _DS4_BUTTONS_DS4_BUTTON_SQUARE: _DS4_BUTTONS = 16;
+pub type _DS4_BUTTONS = i32;
+pub const _DS4_SPECIAL_BUTTONS_DS4_SPECIAL_BUTTON_PS: _DS4_SPECIAL_BUTTONS = 1;
+pub const _DS4_SPECIAL_BUTTONS_DS4_SPECIAL_BUTTON_TOUCHPAD: _DS4_SPECIAL_BUTTONS = 2;
+pub type _DS4_SPECIAL_BUTTONS = i32;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_NONE: _DS4_DPAD_DIRECTIONS = 8;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_NORTHWEST: _DS4_DPAD_DIRECTIONS = 7;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_WEST: _DS4_DPAD_DIRECTIONS = 6;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_SOUTHWEST: _DS4_DPAD_DIRECTIONS = 5;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_SOUTH: _DS4_DPAD_DIRECTIONS = 4;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_SOUTHEAST: _DS4_DPAD_DIRECTIONS = 3;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_EAST: _DS4_DPAD_DIRECTIONS = 2;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_NORTHEAST: _DS4_DPAD_DIRECTIONS = 1;
+pub const _DS4_DPAD_DIRECTIONS_DS4_BUTTON_DPAD_NORTH: _DS4_DPAD_DIRECTIONS = 0;
+pub type _DS4_DPAD_DIRECTIONS = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _DS4_REPORT {
@@ -1781,6 +1823,343 @@ fn bindgen_test_layout__DS4_REPORT() {
     );
 }
 pub type DS4_REPORT = _DS4_REPORT;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _XUSB_REQUEST_NOTIFICATION {
+    pub Size: ULONG,
+    pub SerialNo: ULONG,
+    pub LargeMotor: UCHAR,
+    pub SmallMotor: UCHAR,
+    pub LedNumber: UCHAR,
+}
+#[test]
+fn bindgen_test_layout__XUSB_REQUEST_NOTIFICATION() {
+    assert_eq!(
+        ::std::mem::size_of::<_XUSB_REQUEST_NOTIFICATION>(),
+        12usize,
+        concat!("Size of: ", stringify!(_XUSB_REQUEST_NOTIFICATION))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_XUSB_REQUEST_NOTIFICATION>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_XUSB_REQUEST_NOTIFICATION))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).Size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(Size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).SerialNo as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(SerialNo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).LargeMotor as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(LargeMotor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).SmallMotor as *const _ as usize
+        },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(SmallMotor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).LedNumber as *const _ as usize
+        },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(LedNumber)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _XUSB_SUBMIT_REPORT {
+    pub Size: ULONG,
+    pub SerialNo: ULONG,
+    pub Report: XUSB_REPORT,
+}
+#[test]
+fn bindgen_test_layout__XUSB_SUBMIT_REPORT() {
+    assert_eq!(
+        ::std::mem::size_of::<_XUSB_SUBMIT_REPORT>(),
+        20usize,
+        concat!("Size of: ", stringify!(_XUSB_SUBMIT_REPORT))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_XUSB_SUBMIT_REPORT>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_XUSB_SUBMIT_REPORT))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).Size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_SUBMIT_REPORT),
+            "::",
+            stringify!(Size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).SerialNo as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_SUBMIT_REPORT),
+            "::",
+            stringify!(SerialNo)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).Report as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_SUBMIT_REPORT),
+            "::",
+            stringify!(Report)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _XUSB_GET_USER_INDEX {
+    pub Size: ULONG,
+    pub SerialNo: ULONG,
+    pub UserIndex: ULONG,
+}
+#[test]
+fn bindgen_test_layout__XUSB_GET_USER_INDEX() {
+    assert_eq!(
+        ::std::mem::size_of::<_XUSB_GET_USER_INDEX>(),
+        12usize,
+        concat!("Size of: ", stringify!(_XUSB_GET_USER_INDEX))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_XUSB_GET_USER_INDEX>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_XUSB_GET_USER_INDEX))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).Size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_GET_USER_INDEX),
+            "::",
+            stringify!(Size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).SerialNo as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_GET_USER_INDEX),
+            "::",
+            stringify!(SerialNo)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).UserIndex as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_XUSB_GET_USER_INDEX),
+            "::",
+            stringify!(UserIndex)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _DS4_OUTPUT_REPORT {
+    pub SmallMotor: UCHAR,
+    pub LargeMotor: UCHAR,
+    pub LightbarColor: DS4_LIGHTBAR_COLOR,
+}
+#[test]
+fn bindgen_test_layout__DS4_OUTPUT_REPORT() {
+    assert_eq!(
+        ::std::mem::size_of::<_DS4_OUTPUT_REPORT>(),
+        5usize,
+        concat!("Size of: ", stringify!(_DS4_OUTPUT_REPORT))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_DS4_OUTPUT_REPORT>(),
+        1usize,
+        concat!("Alignment of ", stringify!(_DS4_OUTPUT_REPORT))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_OUTPUT_REPORT>())).SmallMotor as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_OUTPUT_REPORT),
+            "::",
+            stringify!(SmallMotor)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_OUTPUT_REPORT>())).LargeMotor as *const _ as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_OUTPUT_REPORT),
+            "::",
+            stringify!(LargeMotor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_DS4_OUTPUT_REPORT>())).LightbarColor as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_OUTPUT_REPORT),
+            "::",
+            stringify!(LightbarColor)
+        )
+    );
+}
+pub type DS4_OUTPUT_REPORT = _DS4_OUTPUT_REPORT;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _DS4_REQUEST_NOTIFICATION {
+    pub Size: ULONG,
+    pub SerialNo: ULONG,
+    pub Report: DS4_OUTPUT_REPORT,
+}
+#[test]
+fn bindgen_test_layout__DS4_REQUEST_NOTIFICATION() {
+    assert_eq!(
+        ::std::mem::size_of::<_DS4_REQUEST_NOTIFICATION>(),
+        16usize,
+        concat!("Size of: ", stringify!(_DS4_REQUEST_NOTIFICATION))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_DS4_REQUEST_NOTIFICATION>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_DS4_REQUEST_NOTIFICATION))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_REQUEST_NOTIFICATION>())).Size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(Size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_DS4_REQUEST_NOTIFICATION>())).SerialNo as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(SerialNo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_DS4_REQUEST_NOTIFICATION>())).Report as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_REQUEST_NOTIFICATION),
+            "::",
+            stringify!(Report)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _DS4_SUBMIT_REPORT {
+    pub Size: ULONG,
+    pub SerialNo: ULONG,
+    pub Report: DS4_REPORT,
+}
+#[test]
+fn bindgen_test_layout__DS4_SUBMIT_REPORT() {
+    assert_eq!(
+        ::std::mem::size_of::<_DS4_SUBMIT_REPORT>(),
+        20usize,
+        concat!("Size of: ", stringify!(_DS4_SUBMIT_REPORT))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_DS4_SUBMIT_REPORT>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_DS4_SUBMIT_REPORT))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_SUBMIT_REPORT>())).Size as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_SUBMIT_REPORT),
+            "::",
+            stringify!(Size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_SUBMIT_REPORT>())).SerialNo as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_SUBMIT_REPORT),
+            "::",
+            stringify!(SerialNo)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_SUBMIT_REPORT>())).Report as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_SUBMIT_REPORT),
+            "::",
+            stringify!(Report)
+        )
+    );
+}
 pub const _VIGEM_ERRORS_VIGEM_ERROR_NONE: _VIGEM_ERRORS = 536870912;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_BUS_NOT_FOUND: _VIGEM_ERRORS = -536870911;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_NO_FREE_SLOT: _VIGEM_ERRORS = -536870910;

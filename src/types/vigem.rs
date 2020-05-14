@@ -25,24 +25,14 @@ impl Vigem {
     pub fn connect(&mut self) -> Result<(), VigemError> {
         unsafe {
             let err = vigem_connect(*self.vigem);
-            let err = VigemError::new(err);
-            if err.is_err() {
-                return Err(err);
-            } else {
-                return Ok(());
-            }
+            VigemError::new(err).to_result()
         }
     }
 
     pub fn target_add(&mut self, target: &Target) -> Result<(), VigemError> {
         unsafe {
             let err = vigem_target_add(*self.vigem, *target.raw);
-            let err = VigemError::new(err);
-            if err.is_err() {
-                return Err(err);
-            } else {
-                return Ok(());
-            }
+            VigemError::new(err).to_result()
         }
     }
 
@@ -53,24 +43,14 @@ impl Vigem {
     ) -> Result<(), VigemError> {
         unsafe {
             let err = vigem_target_add_async(*self.vigem, *target.raw, func);
-            let err = VigemError::new(err);
-            if err.is_err() {
-                return Err(err);
-            } else {
-                return Ok(());
-            }
+            VigemError::new(err).to_result()
         }
     }
 
     pub fn target_remove(&mut self, target: &Target) -> Result<(), VigemError> {
         unsafe {
             let err = vigem_target_remove(*self.vigem, *target.raw);
-            let err = VigemError::new(err);
-            if err.is_err() {
-                return Err(err);
-            } else {
-                return Ok(());
-            }
+            VigemError::new(err).to_result()
         }
     }
 
@@ -95,22 +75,28 @@ impl Vigem {
         }
     }
 
-    // TODO: Make other  struct for REPORT
     pub fn x360_update(
         &mut self,
         target: &Target,
-        report: crate::binds::XUSB_REPORT,
+        report: crate::types::button::XUSBReport,
     ) -> Result<(), VigemError> {
         unsafe {
-            let err = vigem_target_x360_update(*self.vigem, *target.raw, report);
-            let err = VigemError::new(err);
-            if err.is_err() {
-                return Err(err);
-            } else {
-                return Ok(());
-            }
+            let err = vigem_target_x360_update(*self.vigem, *target.raw, report.to_raw());
+            VigemError::new(err).to_result()
         }
     }
+
+    pub fn ds4_update(
+        &mut self,
+        target: &Target,
+        report: crate::types::button::DSReport,
+    ) -> Result<(), VigemError> {
+        unsafe {
+            let err = vigem_target_ds4_update(*self.vigem, *target.raw, report.to_raw());
+            VigemError::new(err).to_result()
+        }
+    }
+
 
     /// TODO: Add custom user_data
     pub fn x360_register_notification<T: Sized>(
@@ -127,12 +113,7 @@ impl Vigem {
                 func,
                 data_ptr.cast(),
             );
-            let err = VigemError::new(err);
-            if err.is_err() {
-                return Err(err);
-            } else {
-                return Ok(());
-            }
+            VigemError::new(err).to_result()
         }
     }
 
@@ -150,12 +131,7 @@ impl Vigem {
                 func,
                 data_ptr.cast(),
             );
-            let err = VigemError::new(err);
-            if err.is_err() {
-                return Err(err);
-            } else {
-                return Ok(());
-            }
+            VigemError::new(err).to_result()
         }
     }
 }
@@ -169,7 +145,7 @@ impl Drop for Vigem {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum VigemError {
     None,
     BusNotFound,
@@ -214,6 +190,14 @@ impl VigemError {
         match self {
             VigemError::None => false,
             _ => true,
+        }
+    }
+
+    pub fn to_result(&self) -> Result<(), VigemError> {
+        if self.is_err() {
+            Err(self.clone())
+        } else {
+            Ok(())
         }
     }
 }

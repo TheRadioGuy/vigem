@@ -59,9 +59,16 @@ impl Target {
     // pub fn notification(&self) -> u32 {
     //     unsafe { (*self.raw).Notification }
     // }
-    // pub fn notification_user_data(&self) -> std::ffi::c_void {
-    //     unsafe { (*self.raw).NotificationUserData }
-    // }
+    pub fn user_data<T: Sized>(&self) -> Option<&T> {
+        unsafe {
+            let data: *mut T = (*(*(self.raw))).NotificationUserData.cast();
+            if data.is_null(){
+                None
+            } else {
+                Some(&*data)
+            }
+        }
+    }
     // pub fn cancel_notification_thread_event(&self) -> u32 {
     //     unsafe { (*self.raw).cancelNotificationThreadEvent }
     // }
@@ -144,7 +151,6 @@ pub enum TargetState {
     Initialized,
     Connected,
     Disconnected,
-    Unknown,
 }
 
 impl TargetState {
@@ -155,7 +161,7 @@ impl TargetState {
             1 => Initialized,
             2 => Connected,
             3 => Disconnected,
-            _ => Unknown,
+            _ => unreachable!(),
         }
     }
 }
