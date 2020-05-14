@@ -8,25 +8,46 @@ pub struct X360Notification<T: Sized> {
     pub small_motor: u8,
     pub led_number: u8,
     user_data: *mut T,
+    client: Box<PVIGEM_CLIENT>,
+    target: Box<PVIGEM_TARGET>,
 }
 
 impl<T: Sized> X360Notification<T> {
-    pub fn from_raw(raw: *mut EVT_VIGEM_X360_NOTIFICATION) -> Self {
+    pub fn new(
+        client: PVIGEM_CLIENT,
+        target: PVIGEM_TARGET,
+        large_motor: UCHAR,
+        small_motor: UCHAR,
+        led_number: UCHAR,
+        user_data: LPVOID,
+    ) -> Self {
         unsafe {
-            let raw = *raw;
-            let user_data: *mut T = raw.UserData.cast();
+            let user_data: *mut T = user_data.cast();
             return Self {
-                large_motor: raw.LargeMotor,
-                small_motor: raw.SmallMotor,
-                led_number: raw.LedNumber,
+                large_motor,
+                small_motor,
+                led_number,
                 user_data,
+                client: Box::new(client),
+                target: Box::new(target),
             };
         }
     }
 
+    pub fn get_target(&self) -> Target {
+        let target = *self.target;
+        Target::from_raw(target)
+    }
+
+    pub fn get_client(&self) -> Vigem {
+        let client = *self.client;
+        let client = Vigem::from_raw(client);
+        client
+    }
+
     pub fn userdata(&self) -> Option<&T> {
         unsafe {
-            if !self.user_data.is_null(){
+            if !self.user_data.is_null() {
                 return Some(&*self.user_data);
             } else {
                 return None;
@@ -35,10 +56,13 @@ impl<T: Sized> X360Notification<T> {
     }
 }
 
-pub struct DS4Notification {
+pub struct DS4Notification<T: Sized> {
     pub large_motor: u8,
     pub small_motor: u8,
     pub light_bar: LIGHTBAR_COLOR,
+    user_data: *mut T,
+    client: Box<PVIGEM_CLIENT>,
+    target: Box<PVIGEM_TARGET>,
 }
 
 pub struct LIGHTBAR_COLOR {
@@ -53,16 +77,46 @@ impl LIGHTBAR_COLOR {
     }
 }
 
-impl DS4Notification {
-    pub fn from_raw(raw: *mut EVT_VIGEM_DS4_NOTIFICATION) -> Self {
+impl<T: Sized> DS4Notification<T> {
+    pub fn from_raw(
+        client: PVIGEM_CLIENT,
+        target: PVIGEM_TARGET,
+        large_motor: UCHAR,
+        small_motor: UCHAR,
+        light_bar: DS4_LIGHTBAR_COLOR,
+        user_data: LPVOID,
+    ) -> Self {
         unsafe {
-            let raw = *raw;
-            let light_bar = raw.LightBar;
+            let user_data: *mut T = user_data.cast();
             return Self {
-                large_motor: raw.LargeMotor,
-                small_motor: raw.SmallMotor,
+                large_motor,
+                small_motor,
                 light_bar: LIGHTBAR_COLOR::new(light_bar.Red, light_bar.Green, light_bar.Blue),
+                user_data,
+                client: Box::new(client),
+                target: Box::new(target),
             };
+        }
+    }
+
+    pub fn get_target(&self) -> Target {
+        let target = *self.target;
+        Target::from_raw(target)
+    }
+
+    pub fn get_client(&self) -> Vigem {
+        let client = *self.client;
+        let client = Vigem::from_raw(client);
+        client
+    }
+
+    pub fn userdata(&self) -> Option<&T> {
+        unsafe {
+            if !self.user_data.is_null() {
+                return Some(&*self.user_data);
+            } else {
+                return None;
+            }
         }
     }
 }

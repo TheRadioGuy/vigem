@@ -5,7 +5,7 @@ use crate::binds::*;
 #[derive(Debug)]
 pub struct Target {
     pub raw: Box<PVIGEM_TARGET>,
-    drop: bool
+    drop: bool,
 }
 
 impl Target {
@@ -16,11 +16,17 @@ impl Target {
             TargetType::DualShock4 => raw = unsafe { vigem_target_ds4_alloc() },
         }
 
-        Self { raw:Box::new(raw), drop: true }
+        Self {
+            raw: Box::new(raw),
+            drop: true,
+        }
     }
 
     pub fn from_raw(target: PVIGEM_TARGET) -> Self {
-        Self{raw: Box::new(target), drop: false}
+        Self {
+            raw: Box::new(target),
+            drop: false,
+        }
     }
 
     pub fn size(&self) -> u32 {
@@ -32,7 +38,7 @@ impl Target {
     }
 
     pub fn state(&self) -> TargetState {
-        unsafe {TargetState::new((*(*self.raw)).State) }
+        unsafe { TargetState::new((*(*self.raw)).State) }
     }
 
     pub fn get_vid(&self) -> u16 {
@@ -110,7 +116,6 @@ impl Target {
 impl Drop for Target {
     /// Always drop a target - we are good boys
     fn drop(&mut self) {
-
         if self.drop {
             self.free();
         }
@@ -139,7 +144,7 @@ pub enum TargetState {
     Initialized,
     Connected,
     Disconnected,
-    Unknown
+    Unknown,
 }
 
 impl TargetState {
@@ -150,7 +155,7 @@ impl TargetState {
             1 => Initialized,
             2 => Connected,
             3 => Disconnected,
-            _ => Unknown
+            _ => Unknown,
         }
     }
 }

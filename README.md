@@ -1,16 +1,10 @@
 # 🎮 Vigem bindings for Rust! 🎮
+[![](http://meritbadge.herokuapp.com/vigem)](https://crates.io/crates/vigem)
+[![documentation (docs.rs)](https://docs.rs/vigem/badge.svg)](https://docs.rs/vigem)
 
-### It's WIP
-
-### Warning
-~~I cant link this lib (**need help**) so you have to move [dll for your  arch]("https://github.com/DuckerMan/vigem/blob/master/dlls/") to your `.exe` file catalog~~
-
-**Now you can just add create in dependencies and just use it!**(thanks `Michael-F-Bryan`)
-
-Other problem, that bindgen can generate right binding for `EVT_VIGEM_X360_NOTIFICATION` and `EVT_VIGEM_DS4_NOTIFICATION` so I also need help
 
 ### How to use?
-Check examples directory
+Right now I'm writing my own documentation, so as for now you can check the examples directory
 
 # Functions:
 
@@ -35,5 +29,5 @@ Check examples directory
 - [x] `vigem_target_get_pid`
 - [x] `vigem_target_x360_get_user_index`
 - [x] `vigem_register_notification`
-- [x] `vigem_target_update` - **IF you use `.Client` or `.Target`  from `EVT_VIGEM_X360_NOTIFICATION` there's a chance of segfault, and I dont know to fix it
+- [x] `vigem_target_update`
 - [ ] `vigem_target_send_report` - It's the last function, and it's in progress

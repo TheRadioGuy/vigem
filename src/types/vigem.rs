@@ -3,17 +3,23 @@ use crate::types::target::Target;
 
 pub struct Vigem {
     pub vigem: Box<PVIGEM_CLIENT>,
-    drop: bool
+    drop: bool,
 }
 
 impl Vigem {
     pub fn new() -> Self {
         let vigem = unsafe { vigem_alloc() };
-        Self { vigem: Box::new(vigem), drop: true }
+        Self {
+            vigem: Box::new(vigem),
+            drop: true,
+        }
     }
 
     pub fn from_raw(vigem: PVIGEM_CLIENT) -> Self {
-        Self { vigem: Box::new(vigem), drop: false }
+        Self {
+            vigem: Box::new(vigem),
+            drop: false,
+        }
     }
 
     pub fn connect(&mut self) -> Result<(), VigemError> {
@@ -40,7 +46,11 @@ impl Vigem {
         }
     }
 
-    pub fn add_async(&mut self, target: &Target, func: PFN_VIGEM_TARGET_ADD_RESULT) -> Result<(), VigemError> {
+    pub fn add_async(
+        &mut self,
+        target: &Target,
+        func: PFN_VIGEM_TARGET_ADD_RESULT,
+    ) -> Result<(), VigemError> {
         unsafe {
             let err = vigem_target_add_async(*self.vigem, *target.raw, func);
             let err = VigemError::new(err);
@@ -51,7 +61,6 @@ impl Vigem {
             }
         }
     }
-    
 
     pub fn target_remove(&mut self, target: &Target) -> Result<(), VigemError> {
         unsafe {
@@ -124,13 +133,13 @@ impl Vigem {
             } else {
                 return Ok(());
             }
-        }   
+        }
     }
 
     pub fn ds4_register_notification(
         &mut self,
         target: &Target,
-        func: unsafe extern "C" fn(EVT_VIGEM_DS4_NOTIFICATION),
+        func: PFN_VIGEM_DS4_NOTIFICATION,
         data: i32,
     ) -> Result<(), VigemError> {
         unsafe {
@@ -138,7 +147,7 @@ impl Vigem {
             let err = vigem_target_ds4_register_notification(
                 *self.vigem,
                 *target.raw,
-                Some(func),
+                func,
                 data_ptr.cast(),
             );
             let err = VigemError::new(err);
@@ -147,7 +156,7 @@ impl Vigem {
             } else {
                 return Ok(());
             }
-        }   
+        }
     }
 }
 

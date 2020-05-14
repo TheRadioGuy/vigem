@@ -3,8 +3,9 @@
 #![allow(non_snake_case)]
 #![allow(dead_code)]
 
-use vigem::*;
+use vigem::binds::{LPVOID, PVIGEM_CLIENT, PVIGEM_TARGET, UCHAR};
 use vigem::notification::*;
+use vigem::*;
 
 pub fn main() {
     let mut vigem = Vigem::new();
@@ -22,11 +23,27 @@ pub fn main() {
     std::thread::sleep(std::time::Duration::new(999999, 0));
 }
 
-unsafe extern "C" fn handle(data: *mut vigem::raw::EVT_VIGEM_X360_NOTIFICATION) {
-        println!("still get info");
-        println!("Pointer to data: {:p}", data);
-        println!("Data itself is: {:?}", *data);
-        
-        let notification: X360Notification<i32> = X360Notification::from_raw(data);
-        println!("Userdata is {:?}", notification.userdata());
- }
+unsafe extern "C" fn handle(
+    client: PVIGEM_CLIENT,
+    target: PVIGEM_TARGET,
+    large_motor: UCHAR,
+    small_motor: UCHAR,
+    led_number: UCHAR,
+    user_data: LPVOID,
+) {
+    let notification: X360Notification<i32> = X360Notification::new(
+        client,
+        target,
+        large_motor,
+        small_motor,
+        led_number,
+        user_data,
+    );
+    let target = notification.get_target();
+    println!(
+        "Large motor is: {}, small is : {}",
+        notification.large_motor, notification.small_motor
+    );
+    dbg!(target.state());
+    dbg!(notification.userdata().unwrap());
+}
