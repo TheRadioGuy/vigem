@@ -1,8 +1,12 @@
-# 🎮 Vigem bindings for Rust! 🎮
+# 🎮 ViGEm bindings for Rust! 🎮
 [![](http://meritbadge.herokuapp.com/vigem)](https://crates.io/crates/vigem)
 [![documentation (docs.rs)](https://docs.rs/vigem/badge.svg)](https://docs.rs/vigem)
 
+### What is it?
 
+>[ViGEm](https://github.com/ViGEm/ViGEmBus) is Virtual Gamepad Emulation Framework.
+
+My bindings are based on [ViGEm client](https://github.com/ViGEm/ViGEmClient)
 ### How to use?
 Right now I'm writing my own documentation, so as for now you can check the examples directory
 
