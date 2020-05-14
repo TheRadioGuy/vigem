@@ -1529,22 +1529,6 @@ pub const _VIGEM_TARGET_TYPE_Xbox360Wired: _VIGEM_TARGET_TYPE = 0;
 pub const _VIGEM_TARGET_TYPE_DualShock4Wired: _VIGEM_TARGET_TYPE = 2;
 pub type _VIGEM_TARGET_TYPE = i32;
 pub use self::_VIGEM_TARGET_TYPE as VIGEM_TARGET_TYPE;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_UP: _XUSB_BUTTON = 1;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_DOWN: _XUSB_BUTTON = 2;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_LEFT: _XUSB_BUTTON = 4;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_DPAD_RIGHT: _XUSB_BUTTON = 8;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_START: _XUSB_BUTTON = 16;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_BACK: _XUSB_BUTTON = 32;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_LEFT_THUMB: _XUSB_BUTTON = 64;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_RIGHT_THUMB: _XUSB_BUTTON = 128;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_LEFT_SHOULDER: _XUSB_BUTTON = 256;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_RIGHT_SHOULDER: _XUSB_BUTTON = 512;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_GUIDE: _XUSB_BUTTON = 1024;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_A: _XUSB_BUTTON = 4096;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_B: _XUSB_BUTTON = 8192;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_X: _XUSB_BUTTON = 16384;
-pub const _XUSB_BUTTON_XUSB_GAMEPAD_Y: _XUSB_BUTTON = 32768;
-pub type _XUSB_BUTTON = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _XUSB_REPORT {
@@ -1640,6 +1624,57 @@ fn bindgen_test_layout__XUSB_REPORT() {
     );
 }
 pub type XUSB_REPORT = _XUSB_REPORT;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _DS4_LIGHTBAR_COLOR {
+    pub Red: UCHAR,
+    pub Green: UCHAR,
+    pub Blue: UCHAR,
+}
+#[test]
+fn bindgen_test_layout__DS4_LIGHTBAR_COLOR() {
+    assert_eq!(
+        ::std::mem::size_of::<_DS4_LIGHTBAR_COLOR>(),
+        3usize,
+        concat!("Size of: ", stringify!(_DS4_LIGHTBAR_COLOR))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_DS4_LIGHTBAR_COLOR>(),
+        1usize,
+        concat!("Alignment of ", stringify!(_DS4_LIGHTBAR_COLOR))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_LIGHTBAR_COLOR>())).Red as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_LIGHTBAR_COLOR),
+            "::",
+            stringify!(Red)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_LIGHTBAR_COLOR>())).Green as *const _ as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_LIGHTBAR_COLOR),
+            "::",
+            stringify!(Green)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_DS4_LIGHTBAR_COLOR>())).Blue as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_DS4_LIGHTBAR_COLOR),
+            "::",
+            stringify!(Blue)
+        )
+    );
+}
+pub type DS4_LIGHTBAR_COLOR = _DS4_LIGHTBAR_COLOR;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _DS4_REPORT {
@@ -1746,186 +1781,6 @@ fn bindgen_test_layout__DS4_REPORT() {
     );
 }
 pub type DS4_REPORT = _DS4_REPORT;
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _XUSB_REQUEST_NOTIFICATION {
-    pub Size: ULONG,
-    pub SerialNo: ULONG,
-    pub LargeMotor: UCHAR,
-    pub SmallMotor: UCHAR,
-    pub LedNumber: UCHAR,
-}
-#[test]
-fn bindgen_test_layout__XUSB_REQUEST_NOTIFICATION() {
-    assert_eq!(
-        ::std::mem::size_of::<_XUSB_REQUEST_NOTIFICATION>(),
-        12usize,
-        concat!("Size of: ", stringify!(_XUSB_REQUEST_NOTIFICATION))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_XUSB_REQUEST_NOTIFICATION>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_XUSB_REQUEST_NOTIFICATION))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).Size as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_REQUEST_NOTIFICATION),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).SerialNo as *const _ as usize
-        },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_REQUEST_NOTIFICATION),
-            "::",
-            stringify!(SerialNo)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).LargeMotor as *const _ as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_REQUEST_NOTIFICATION),
-            "::",
-            stringify!(LargeMotor)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).SmallMotor as *const _ as usize
-        },
-        9usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_REQUEST_NOTIFICATION),
-            "::",
-            stringify!(SmallMotor)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_XUSB_REQUEST_NOTIFICATION>())).LedNumber as *const _ as usize
-        },
-        10usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_REQUEST_NOTIFICATION),
-            "::",
-            stringify!(LedNumber)
-        )
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _XUSB_SUBMIT_REPORT {
-    pub Size: ULONG,
-    pub SerialNo: ULONG,
-    pub Report: XUSB_REPORT,
-}
-#[test]
-fn bindgen_test_layout__XUSB_SUBMIT_REPORT() {
-    assert_eq!(
-        ::std::mem::size_of::<_XUSB_SUBMIT_REPORT>(),
-        20usize,
-        concat!("Size of: ", stringify!(_XUSB_SUBMIT_REPORT))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_XUSB_SUBMIT_REPORT>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_XUSB_SUBMIT_REPORT))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).Size as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_SUBMIT_REPORT),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).SerialNo as *const _ as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_SUBMIT_REPORT),
-            "::",
-            stringify!(SerialNo)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_XUSB_SUBMIT_REPORT>())).Report as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_SUBMIT_REPORT),
-            "::",
-            stringify!(Report)
-        )
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _XUSB_GET_USER_INDEX {
-    pub Size: ULONG,
-    pub SerialNo: ULONG,
-    pub UserIndex: ULONG,
-}
-#[test]
-fn bindgen_test_layout__XUSB_GET_USER_INDEX() {
-    assert_eq!(
-        ::std::mem::size_of::<_XUSB_GET_USER_INDEX>(),
-        12usize,
-        concat!("Size of: ", stringify!(_XUSB_GET_USER_INDEX))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_XUSB_GET_USER_INDEX>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_XUSB_GET_USER_INDEX))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).Size as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_GET_USER_INDEX),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).SerialNo as *const _ as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_GET_USER_INDEX),
-            "::",
-            stringify!(SerialNo)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_XUSB_GET_USER_INDEX>())).UserIndex as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_XUSB_GET_USER_INDEX),
-            "::",
-            stringify!(UserIndex)
-        )
-    );
-}
 pub const _VIGEM_ERRORS_VIGEM_ERROR_NONE: _VIGEM_ERRORS = 536870912;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_BUS_NOT_FOUND: _VIGEM_ERRORS = -536870911;
 pub const _VIGEM_ERRORS_VIGEM_ERROR_NO_FREE_SLOT: _VIGEM_ERRORS = -536870910;
@@ -1958,57 +1813,35 @@ pub type PVIGEM_CLIENT = *mut _VIGEM_CLIENT_T;
 #[doc = ""]
 #[doc = " \\brief   Defines an alias representing a target device object."]
 pub type PVIGEM_TARGET = *mut _VIGEM_TARGET_T;
-
-pub type PFN_VIGEM_TARGET_ADD_RESULT = ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_TARGET_ADD_RESULT)>;
-pub type PFN_VIGEM_X360_NOTIFICATION =
-    ::std::option::Option<unsafe extern "C" fn(*mut EVT_VIGEM_X360_NOTIFICATION)>;
-pub type PFN_VIGEM_DS4_NOTIFICATION =
-    ::std::option::Option<unsafe extern "C" fn(EVT_VIGEM_DS4_NOTIFICATION)>;
-
-    #[repr(C)]
-    #[derive(Debug, Copy, Clone)]
-pub struct EVT_VIGEM_TARGET_ADD_RESULT {
-    pub Result: VIGEM_ERROR,
-    pub Client: PVIGEM_CLIENT,
-    pub Target: PVIGEM_TARGET,
-}
-
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct EVT_VIGEM_X360_NOTIFICATION {
-    pub LargeMotor: BYTE,
-    pub Client: PVIGEM_CLIENT,
-    pub Target: PVIGEM_TARGET,
-    pub SmallMotor: BYTE,
-    pub LedNumber: BYTE,
-    pub UserData: LPVOID,
-}
-
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct EVT_VIGEM_DS4_NOTIFICATION {
-    pub LargeMotor: BYTE,
-    pub SmallMotor: BYTE,
-    pub LightBar: DS4_LIGHTBAR_COLOR,
-    pub UserData: LPVOID,
-    pub Client: PVIGEM_CLIENT,
-    pub Target: PVIGEM_TARGET,
-}
-
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct DS4_LIGHTBAR_COLOR {
-    pub Red: UCHAR,
-    pub Green: UCHAR,
-    pub Blue: UCHAR
-}
-
+pub type PFN_VIGEM_TARGET_ADD_RESULT = ::std::option::Option<
+    unsafe extern "C" fn(arg1: PVIGEM_CLIENT, arg2: PVIGEM_TARGET, arg3: VIGEM_ERROR),
+>;
+pub type PFN_VIGEM_X360_NOTIFICATION = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: PVIGEM_CLIENT,
+        arg2: PVIGEM_TARGET,
+        arg3: UCHAR,
+        arg4: UCHAR,
+        arg5: UCHAR,
+        arg6: LPVOID,
+    ),
+>;
+pub type PFN_VIGEM_DS4_NOTIFICATION = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: PVIGEM_CLIENT,
+        arg2: PVIGEM_TARGET,
+        arg3: UCHAR,
+        arg4: UCHAR,
+        arg5: DS4_LIGHTBAR_COLOR,
+        arg6: LPVOID,
+    ),
+>;
 extern "C" {
     #[doc = " \\fn  PVIGEM_CLIENT vigem_alloc(void);"]
     #[doc = ""]
     #[doc = " \\brief   Allocates an object representing a driver connection."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\return  A new driver connection object."]
@@ -2019,7 +1852,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Frees up memory used by the driver connection object."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2031,7 +1864,7 @@ extern "C" {
     #[doc = " \\brief   Initializes the driver object and establishes a connection to the emulation bus"]
     #[doc = "          driver. Returns an error if no compatible bus device has been found."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2047,7 +1880,7 @@ extern "C" {
     #[doc = "          still be connected will be destroyed automatically. Be aware, that allocated target"]
     #[doc = "          objects won't be automatically freed, this has to be taken care of by the caller."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2058,7 +1891,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Allocates an object representing an Xbox 360 Controller device."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\return  A PVIGEM_TARGET representing an Xbox 360 Controller device."]
@@ -2069,7 +1902,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Allocates an object representing a DualShock 4 Controller device."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\return  A PVIGEM_TARGET representing a DualShock 4 Controller device."]
@@ -2083,7 +1916,7 @@ extern "C" {
     #[doc = "          removed before this call, the device becomes orphaned until the owning process is"]
     #[doc = "          terminated."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2096,7 +1929,7 @@ extern "C" {
     #[doc = "          event of a physical hardware device. This function blocks until the target device is"]
     #[doc = "          in full operational mode."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2113,7 +1946,7 @@ extern "C" {
     #[doc = "          callback may be registered which gets called on error or if the target device has"]
     #[doc = "          become fully operational."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2135,7 +1968,7 @@ extern "C" {
     #[doc = "          after this function is called. If this function is never called on target device"]
     #[doc = "          objects, they will be removed from the bus when the owning process terminates."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2151,7 +1984,7 @@ extern "C" {
     #[doc = "          occur on the provided target device. This function fails if the provided target"]
     #[doc = "          device isn't fully operational or in an erroneous state."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem           The driver connection object."]
@@ -2174,7 +2007,7 @@ extern "C" {
     #[doc = "          occur on the provided target device. This function fails if the provided target"]
     #[doc = "          device isn't fully operational or in an erroneous state."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem           The driver connection object."]
@@ -2195,7 +2028,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Removes a previously registered callback function from the provided target object."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2206,7 +2039,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Removes a previously registered callback function from the provided target object."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2217,7 +2050,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Overrides the default Vendor ID value with the provided one."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2229,7 +2062,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Overrides the default Product ID value with the provided one."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2241,7 +2074,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Returns the Vendor ID of the provided target device object."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2254,7 +2087,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Returns the Product ID of the provided target device object."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2267,7 +2100,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Sends a state report to the provided target device."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2286,7 +2119,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Sends a state report to the provided target device."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2310,7 +2143,7 @@ extern "C" {
     #[doc = "          for its lifetime. This value becomes invalid once the target device is removed from"]
     #[doc = "          the bus and may change on the next addition of the device."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2323,7 +2156,7 @@ extern "C" {
     #[doc = ""]
     #[doc = " \\brief   Returns the type of the provided target device object."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    28.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2337,7 +2170,7 @@ extern "C" {
     #[doc = " \\brief   Returns TRUE if the provided target device object is currently attached to the bus,"]
     #[doc = "          FALSE otherwise."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    30.08.2017"]
     #[doc = ""]
     #[doc = " \\param   target  The target device object."]
@@ -2352,7 +2185,7 @@ extern "C" {
     #[doc = "          (zero-based) index number representing the player number via LED present on a"]
     #[doc = "          physical controller and is compatible to the dwUserIndex propery of the XInput* APIs."]
     #[doc = ""]
-    #[doc = " \\author  Benjamin \"Nefarius\" H�glinger"]
+    #[doc = " \\author  Benjamin \"Nefarius\" H\u{fffd}glinger"]
     #[doc = " \\date    10.05.2018"]
     #[doc = ""]
     #[doc = " \\param   vigem   The driver connection object."]
@@ -2439,7 +2272,6 @@ pub const _VIGEM_TARGET_STATE_VIGEM_TARGET_INITIALIZED: _VIGEM_TARGET_STATE = 1;
 pub const _VIGEM_TARGET_STATE_VIGEM_TARGET_CONNECTED: _VIGEM_TARGET_STATE = 2;
 pub const _VIGEM_TARGET_STATE_VIGEM_TARGET_DISCONNECTED: _VIGEM_TARGET_STATE = 3;
 pub type _VIGEM_TARGET_STATE = i32;
-
 pub use self::_VIGEM_TARGET_STATE as VIGEM_TARGET_STATE;
 #[repr(C)]
 #[derive(Debug)]
@@ -2456,13 +2288,6 @@ pub struct _VIGEM_TARGET_T {
     pub cancelNotificationThreadEvent: HANDLE,
     pub notificationThreadList: std_unique_ptr,
 }
-
-impl Drop for _VIGEM_TARGET_T {
-    fn drop(&mut self){
-        println!("DROP THE TARGET!!!!");
-    }
-}
-
 #[test]
 fn bindgen_test_layout__VIGEM_TARGET_T() {
     assert_eq!(

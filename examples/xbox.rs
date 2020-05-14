@@ -4,6 +4,7 @@
 #![allow(dead_code)]
 
 use vigem::*;
+use vigem::notification::*;
 
 pub fn main() {
     let mut vigem = Vigem::new();
@@ -16,7 +17,7 @@ pub fn main() {
     dbg!(vigem.xbox_get_user_index(&target));
     println!("Pointer to target: {:p}", target.raw);
     vigem
-        .x360_register_notification(&target, Some(handle), 11)
+        .x360_register_notification(&target, Some(handle), 123)
         .unwrap();
     std::thread::sleep(std::time::Duration::new(999999, 0));
 }
@@ -25,4 +26,7 @@ unsafe extern "C" fn handle(data: *mut vigem::raw::EVT_VIGEM_X360_NOTIFICATION) 
         println!("still get info");
         println!("Pointer to data: {:p}", data);
         println!("Data itself is: {:?}", *data);
+        
+        let notification: X360Notification<i32> = X360Notification::from_raw(data);
+        println!("Userdata is {:?}", notification.userdata());
  }

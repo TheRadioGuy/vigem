@@ -104,14 +104,14 @@ impl Vigem {
     }
 
     /// TODO: Add custom user_data
-    pub fn x360_register_notification(
+    pub fn x360_register_notification<T: Sized>(
         &mut self,
         target: &Target,
         func: PFN_VIGEM_X360_NOTIFICATION,
-        data: i32,
+        mut data: T,
     ) -> Result<(), VigemError> {
         unsafe {
-            let data_ptr = data as *mut i32;
+            let data_ptr: *mut T = &mut data;
             let err = vigem_target_x360_register_notification(
                 *self.vigem,
                 *target.raw,
