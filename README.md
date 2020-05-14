@@ -6,7 +6,7 @@
 
 >[ViGEm](https://github.com/ViGEm/ViGEmBus) is Virtual Gamepad Emulation Framework.
 
-My bindings are based on [ViGEm client](https://github.com/ViGEm/ViGEmClient)
+These bindings are based on [ViGEm client](https://github.com/ViGEm/ViGEmClient)
 ### How to use?
 Right now I'm writing my own documentation, so as for now you can check the examples directory
 
