@@ -16,7 +16,7 @@ pub enum XButton {
     B,
     X,
     Y,
-    Nothing
+    Nothing,
 }
 
 impl XButton {
@@ -38,7 +38,7 @@ impl XButton {
             B => 8192,
             X => 16384,
             Y => 32768,
-            Nothing => 0
+            Nothing => 0,
         }
     }
 }
@@ -51,20 +51,36 @@ pub struct XUSBReport {
     pub s_thumb_lx: i16,
     pub s_thumb_ly: i16,
     pub s_thumb_rx: i16,
-    pub s_thumb_ry: i16
+    pub s_thumb_ry: i16,
 }
 
 impl XUSBReport {
     pub fn to_raw(&self) -> XUSB_REPORT {
         let buttons = self.w_buttons.to_raw();
-        let report = XUSB_REPORT{wButtons: buttons, bLeftTrigger: self.b_left_trigger, bRightTrigger: self.b_right_trigger, sThumbLX: self.s_thumb_lx, sThumbLY: self.s_thumb_ly, sThumbRX: self.s_thumb_rx, sThumbRY: self.s_thumb_ry};
+        let report = XUSB_REPORT {
+            wButtons: buttons,
+            bLeftTrigger: self.b_left_trigger,
+            bRightTrigger: self.b_right_trigger,
+            sThumbLX: self.s_thumb_lx,
+            sThumbLY: self.s_thumb_ly,
+            sThumbRX: self.s_thumb_rx,
+            sThumbRY: self.s_thumb_ry,
+        };
         report
     }
 }
 
 impl Default for XUSBReport {
     fn default() -> Self {
-        Self{w_buttons: XButton::Nothing, b_left_trigger:0, b_right_trigger:0, s_thumb_lx:0, s_thumb_ly:0, s_thumb_rx: 0,s_thumb_ry:0 }
+        Self {
+            w_buttons: XButton::Nothing,
+            b_left_trigger: 0,
+            b_right_trigger: 0,
+            s_thumb_lx: 0,
+            s_thumb_ly: 0,
+            s_thumb_rx: 0,
+            s_thumb_ry: 0,
+        }
     }
 }
 
@@ -81,7 +97,7 @@ pub enum DS4Button {
     Circle,
     Cross,
     Square,
-    Nothing
+    Nothing,
 }
 
 impl DS4Button {
@@ -100,7 +116,7 @@ impl DS4Button {
             Circle => 64,
             Cross => 32,
             Square => 16,
-            Nothing => 0
+            Nothing => 0,
         }
     }
 }
@@ -108,7 +124,7 @@ impl DS4Button {
 pub enum SpecialButton {
     PS,
     Touchpad,
-    Nothing
+    Nothing,
 }
 
 impl SpecialButton {
@@ -117,7 +133,7 @@ impl SpecialButton {
         match self {
             PS => 1,
             Touchpad => 2,
-            Nothing => 0
+            Nothing => 0,
         }
     }
 }
@@ -131,7 +147,7 @@ pub enum DS4Dpad {
     Southeast,
     East,
     Northeast,
-    North
+    North,
 }
 
 impl DS4Dpad {
@@ -146,7 +162,7 @@ impl DS4Dpad {
             Southeast => 3,
             East => 2,
             Northeast => 1,
-            North => 0
+            North => 0,
         }
     }
 }
@@ -159,17 +175,35 @@ pub struct DSReport {
     pub w_buttons: DS4Button,
     pub b_special: SpecialButton,
     pub b_trigger_l: u8,
-    pub b_trigger_r: u8
+    pub b_trigger_r: u8,
 }
 
 impl DSReport {
-    pub fn to_raw(&self) -> _DS4_REPORT{
-        _DS4_REPORT{bThumbLX: self.b_thumb_lx, bThumbLY: self.b_thumb_ly, bThumbRX: self.b_thumb_rx, bThumbRY: self.b_thumb_ry, wButtons: self.w_buttons.to_raw(), bSpecial: self.b_special.to_raw(), bTriggerL: self.b_trigger_l, bTriggerR: self.b_trigger_r}
+    pub fn to_raw(&self) -> _DS4_REPORT {
+        _DS4_REPORT {
+            bThumbLX: self.b_thumb_lx,
+            bThumbLY: self.b_thumb_ly,
+            bThumbRX: self.b_thumb_rx,
+            bThumbRY: self.b_thumb_ry,
+            wButtons: self.w_buttons.to_raw(),
+            bSpecial: self.b_special.to_raw(),
+            bTriggerL: self.b_trigger_l,
+            bTriggerR: self.b_trigger_r,
+        }
     }
 }
 
 impl Default for DSReport {
     fn default() -> Self {
-        Self{b_special: SpecialButton::Nothing, b_thumb_lx: 0, b_thumb_ly: 0, b_thumb_rx: 0, b_thumb_ry: 0, b_trigger_l: 0,b_trigger_r:0,w_buttons: DS4Button::Nothing}
+        Self {
+            b_special: SpecialButton::Nothing,
+            b_thumb_lx: 0,
+            b_thumb_ly: 0,
+            b_thumb_rx: 0,
+            b_thumb_ry: 0,
+            b_trigger_l: 0,
+            b_trigger_r: 0,
+            w_buttons: DS4Button::Nothing,
+        }
     }
 }

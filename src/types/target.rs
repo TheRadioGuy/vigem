@@ -62,7 +62,7 @@ impl Target {
     pub fn user_data<T: Sized>(&self) -> Option<&T> {
         unsafe {
             let data: *mut T = (*(*(self.raw))).NotificationUserData.cast();
-            if data.is_null(){
+            if data.is_null() {
                 None
             } else {
                 Some(&*data)

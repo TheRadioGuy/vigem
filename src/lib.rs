@@ -7,7 +7,7 @@ pub mod binds;
 pub mod types;
 
 pub use binds as raw;
+pub use types::button::*;
 pub use types::notification;
 pub use types::target::*;
 pub use types::vigem::*;
-pub use types::button::*;

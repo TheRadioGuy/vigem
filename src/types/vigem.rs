@@ -97,13 +97,16 @@ impl Vigem {
         }
     }
 
-    pub fn clean(&mut self, target: &Target) -> Result<(), VigemError>{
+    pub fn clean(&mut self, target: &Target) -> Result<(), VigemError> {
         match target.get_type() {
-            TargetType::Xbox360 => self.x360_update(target, &crate::types::button::XUSBReport::default()),
-            TargetType::DualShock4 => self.ds4_update(target, &crate::types::button::DSReport::default())
+            TargetType::Xbox360 => {
+                self.x360_update(target, &crate::types::button::XUSBReport::default())
+            }
+            TargetType::DualShock4 => {
+                self.ds4_update(target, &crate::types::button::DSReport::default())
+            }
         }
     }
-
 
     /// TODO: Add custom user_data
     pub fn x360_register_notification<T: Sized>(

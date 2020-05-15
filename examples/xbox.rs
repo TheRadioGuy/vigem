@@ -8,32 +8,27 @@ use vigem::notification::*;
 use vigem::*;
 
 pub fn main() {
+    // Make a vigem object, which alloc immediantely
     let mut vigem = Vigem::new();
+    // connect our client to a VigemBus
     vigem.connect().unwrap();
-
+    // Make a new target which represent XBOX360 controller
     let target = Target::new(TargetType::Xbox360);
+    // Get controller state - as target isnt connected state is "Initialized"
     dbg!(target.state());
+    // Add target to VigemBUS
     vigem.target_add(&target).unwrap();
+    // Now it's connected!
     dbg!(target.state());
-    dbg!(vigem.xbox_get_user_index(&target));
-    println!("Pointer to target: {:p}", target.raw);
+
+    // It's a bit harder. We register notification. Handle will be called every time controller get forcefeedbacked
     vigem
         .x360_register_notification::<i32>(&target, Some(handle), 123123123)
         .unwrap();
 
-    // loop {
-    //     let mut report = XUSBReport::default();
-    //     report.w_buttons = XButton::X;
-    //     vigem.x360_update(&target, report).unwrap();
-    // }
 
-    let mut report = XUSBReport::default();
-    report.w_buttons = XButton::X;
-    println!("Send X");
-    vigem.x360_update(&target, &report).unwrap();
-    std::thread::sleep(std::time::Duration::new(5, 0));
-    report.w_buttons = XButton::Y;
-    println!("Send Y ");
+    // Now make a XUSBReport. So our controller will press Y button and LT
+    let report = XUSBReport{w_buttons: XButton::Y, b_left_trigger: 100, ..XUSBReport::default()};
     vigem.x360_update(&target, &report).unwrap();
 
     std::thread::sleep(std::time::Duration::new(999999, 0));
@@ -47,6 +42,7 @@ unsafe extern "C" fn handle(
     led_number: UCHAR,
     user_data: LPVOID,
 ) {
+    // make a safe absraction over all arguments
     let notification: X360Notification<i32> = X360Notification::new(
         client,
         target,
@@ -55,11 +51,21 @@ unsafe extern "C" fn handle(
         led_number,
         user_data,
     );
+
+    // get target and client which we got in our callback
     let target = notification.get_target();
+    let mut vigem = notification.get_client();
+
     println!(
         "Large motor is: {}, small is : {}",
         notification.large_motor, notification.small_motor
     );
     dbg!(target.state());
+    // Got userdata(I dont know what it is)
     dbg!(notification.userdata().unwrap());
+    
+    // Now we press B button and RT
+
+    let report = XUSBReport{w_buttons: XButton::B, b_right_trigger: 100, ..XUSBReport::default()};
+    vigem.x360_update(&target, &report).unwrap();
 }
