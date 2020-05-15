@@ -63,6 +63,7 @@ pub struct DS4Notification<T: Sized> {
     target: Box<PVIGEM_TARGET>,
 }
 
+#[derive(Debug)]
 pub struct LIGHTBAR_COLOR {
     red: u8,
     green: u8,
