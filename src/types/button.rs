@@ -1,49 +1,35 @@
 use crate::binds::*;
-#[derive(Clone, Debug)]
-pub enum XButton {
-    DpadUp,
-    DpadDown,
-    DpadLeft,
-    DpadRight,
-    Start,
-    Back,
-    LeftThumb,
-    RightThumb,
-    LeftShoulder,
-    RightShoulder,
-    Guide,
-    A,
-    B,
-    X,
-    Y,
-    Nothing,
-}
+use std::ops::Add;
 
-impl XButton {
-    pub fn to_raw(&self) -> u16 {
-        use XButton::*;
-        match self {
-            DpadUp => 1,
-            DpadDown => 2,
-            DpadLeft => 4,
-            DpadRight => 8,
-            Start => 16,
-            Back => 32,
-            LeftThumb => 64,
-            RightThumb => 128,
-            LeftShoulder => 256,
-            RightShoulder => 512,
-            Guide => 1024,
-            A => 4096,
-            B => 8192,
-            X => 16384,
-            Y => 32768,
-            Nothing => 0,
-        }
+bitflags! {
+    pub struct XButton: u16 {
+        const DpadUp = 1;
+        const DpadDown = 2;
+        const DpadLeft = 4;
+        const DpadRight = 8;
+        const Start = 16;
+        const Back = 32;
+        const LeftThumb = 64;
+        const RightThumb = 128;
+        const LeftShoulder = 256;
+        const RightShoulder = 512;
+        const Guide = 1024;
+        const A = 4096;
+        const B = 8192;
+        const X = 16384;
+        const Y = 32768;
+        const Nothing = 0;
     }
 }
 
-#[derive(Clone, Debug)]
+impl Add for XButton {
+    type Output = Self;
+    fn add(self, rhs: Self) -> Self::Output {
+        Self::from_bits(self.bits() + rhs.bits()).unwrap()
+    }
+}
+
+#[derive(Clone, Debug, Copy)]
 pub struct XUSBReport {
     pub w_buttons: XButton,
     pub b_left_trigger: u8,
@@ -54,11 +40,16 @@ pub struct XUSBReport {
     pub s_thumb_ry: i16,
 }
 
+// impl From<_XUSB_REPORT> for XUSBReport {
+//     fn from(t: _XUSB_REPORT) -> Self {
+//         Self{w_buttons: XButton::n(t.wButtons).unwrap() ,b_left_trigger: t.bLeftTrigger, b_right_trigger: t.bRightTrigger, s_thumb_lx: t.sThumbLX, s_thumb_ly: t.sThumbLY, s_thumb_rx: t.sThumbRX, s_thumb_ry: t.sThumbRY}
+//     }
+// }
+
 impl XUSBReport {
     pub fn to_raw(&self) -> XUSB_REPORT {
-        let buttons = self.w_buttons.to_raw();
         let report = XUSB_REPORT {
-            wButtons: buttons,
+            wButtons: self.w_buttons.bits(),
             bLeftTrigger: self.b_left_trigger,
             bRightTrigger: self.b_right_trigger,
             sThumbLX: self.s_thumb_lx,
@@ -84,87 +75,42 @@ impl Default for XUSBReport {
     }
 }
 
-pub enum DS4Button {
-    ThumbRight,
-    ThumbLeft,
-    Options,
-    Share, // By the way, I wanna say that I ♥ Life is Strange game series
-    TriggerRight,
-    TriggerLeft,
-    ShoulderRight,
-    ShoulderLeft,
-    Triangle,
-    Circle,
-    Cross,
-    Square,
-    Nothing,
-}
-
-impl DS4Button {
-    pub fn to_raw(&self) -> u16 {
-        use DS4Button::*;
-        match self {
-            ThumbRight => 32768,
-            ThumbLeft => 16384,
-            Options => 8192,
-            Share => 4096,
-            TriggerRight => 2048,
-            TriggerLeft => 1024,
-            ShoulderRight => 512,
-            ShoulderLeft => 256,
-            Triangle => 128,
-            Circle => 64,
-            Cross => 32,
-            Square => 16,
-            Nothing => 0,
-        }
+bitflags! {
+    pub struct DS4Button: u16 {
+        const ThumbRight = 32768;
+        const ThumbLeft = 16384;
+        const Options = 8192;
+        const Share = 4096; // By the way, I wanna say that I ♥ Life is Strange game series
+        const TriggerRight = 2048;
+        const TriggerLeft = 1024;
+        const ShoulderRight = 512;
+        const ShoulderLeft = 256;
+        const Triangle = 128;
+        const Circle = 64;
+        const Cross = 32;
+        const Square = 16;
+        const Nothing = 0;
     }
 }
 
+#[derive(Copy, Clone)]
 pub enum SpecialButton {
-    PS,
-    Touchpad,
-    Nothing,
+    PS = 1,
+    Touchpad = 2,
+    Nothing = 0,
 }
 
-impl SpecialButton {
-    pub fn to_raw(&self) -> u8 {
-        use SpecialButton::*;
-        match self {
-            PS => 1,
-            Touchpad => 2,
-            Nothing => 0,
-        }
-    }
-}
-
+#[derive(Copy, Clone)]
 pub enum DS4Dpad {
-    None,
-    Northwest,
-    West,
-    Southwest,
-    South,
-    Southeast,
-    East,
-    Northeast,
-    North,
-}
-
-impl DS4Dpad {
-    pub fn to_raw(&self) -> u16 {
-        use DS4Dpad::*;
-        match self {
-            None => 8,
-            Northwest => 7,
-            West => 6,
-            Southwest => 5,
-            South => 4,
-            Southeast => 3,
-            East => 2,
-            Northeast => 1,
-            North => 0,
-        }
-    }
+    None = 8,
+    Northwest = 7,
+    West = 6,
+    Southwest = 5,
+    South = 4,
+    Southeast = 3,
+    East = 2,
+    Northeast = 1,
+    North = 0,
 }
 
 pub struct DSReport {
@@ -185,8 +131,8 @@ impl DSReport {
             bThumbLY: self.b_thumb_ly,
             bThumbRX: self.b_thumb_rx,
             bThumbRY: self.b_thumb_ry,
-            wButtons: self.w_buttons.to_raw(),
-            bSpecial: self.b_special.to_raw(),
+            wButtons: self.w_buttons.bits(),
+            bSpecial: self.b_special as u8,
             bTriggerL: self.b_trigger_l,
             bTriggerR: self.b_trigger_r,
         }

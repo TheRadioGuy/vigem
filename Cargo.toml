@@ -11,6 +11,7 @@ license = "GPL-3.0-or-later"
 exclude = ["target", "src/binds/*.h", "src/binds/*.cpp", "examples"]
 
 [dependencies]
+bitflags = "*"
 
 [profile.release]
 lto = true

@@ -2,6 +2,9 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(dead_code)]
+// TODO: Get avoid of unnecessarry crate
+#[macro_use]
+extern crate bitflags;
 
 pub mod binds;
 pub mod types;

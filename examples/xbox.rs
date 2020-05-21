@@ -26,9 +26,12 @@ pub fn main() {
         .x360_register_notification::<i32>(&target, Some(handle), 123123123)
         .unwrap();
 
-
     // Now make a XUSBReport. So our controller will press Y button and LT
-    let report = XUSBReport{w_buttons: XButton::Y, b_left_trigger: 100, ..XUSBReport::default()};
+    let report = XUSBReport {
+        w_buttons: XButton::Y + XButton::X,
+        b_left_trigger: 100,
+        ..XUSBReport::default()
+    };
     vigem.x360_update(&target, &report).unwrap();
 
     std::thread::sleep(std::time::Duration::new(999999, 0));
@@ -63,9 +66,13 @@ unsafe extern "C" fn handle(
     dbg!(target.state());
     // Got userdata(I dont know what it is)
     dbg!(notification.userdata().unwrap());
-    
+
     // Now we press B button and RT
 
-    let report = XUSBReport{w_buttons: XButton::B, b_right_trigger: 100, ..XUSBReport::default()};
+    let report = XUSBReport {
+        w_buttons: XButton::B,
+        b_right_trigger: 100,
+        ..XUSBReport::default()
+    };
     vigem.x360_update(&target, &report).unwrap();
 }
