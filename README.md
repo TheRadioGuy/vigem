@@ -45,4 +45,5 @@ Check [examples](https://github.com/DuckerMan/vigem/tree/master/examples) or [re
 - [ ] Macro for more comfortable using
 - [ ] Add `tests`
 - [ ] Split to `-sys` crate
+- [ ] Auto bindings generation
 - [ ] Finish `Life is Strange 2` game

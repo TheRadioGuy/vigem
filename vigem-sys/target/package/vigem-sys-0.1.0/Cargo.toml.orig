@@ -1,0 +1,12 @@
+[package]
+name = "vigem-sys"
+version = "0.1.0"
+authors = ["Sergey Duck <sergeypechnikov326@gmail.com>"]
+edition = "2018"
+description = "Rust raw bindings for ViGEm"
+repository = "https://github.com/DuckerMan/vigem/tree/master/vigem-sys"
+keywords = ["rust", "vigem", "xbox360", "xbox"]
+license = "GPL-3.0-or-later"
+exclude = ["src/binds/*.h", "src/binds/*.cpp", "examples"]
+
+[dependencies]

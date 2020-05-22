@@ -11,4 +11,9 @@ name = "vigem"
 version = "0.5.0"
 dependencies = [
  "bitflags",
+ "vigem-sys",
 ]
+
+[[package]]
+name = "vigem-sys"
+version = "0.1.0"

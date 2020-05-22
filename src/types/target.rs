@@ -1,4 +1,4 @@
-use crate::binds::*;
+use crate::raw::*;
 
 /// It's a safe abstraction over `PVIGEM_TARGET`
 /// Note: If you use from_raw, dont forget to manually call `target.free()` or you will die

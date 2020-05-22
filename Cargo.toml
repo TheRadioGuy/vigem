@@ -12,6 +12,7 @@ exclude = ["target", "src/binds/*.h", "src/binds/*.cpp", "examples", "gamepad.pn
 
 [dependencies]
 bitflags = "*"
+vigem-sys = { path = "./vigem-sys" }
 
 [profile.release]
 lto = true

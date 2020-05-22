@@ -3,7 +3,7 @@
 #![allow(non_snake_case)]
 #![allow(dead_code)]
 
-use vigem::binds::{LPVOID, PVIGEM_CLIENT, PVIGEM_TARGET, UCHAR};
+use vigem::raw::{LPVOID, PVIGEM_CLIENT, PVIGEM_TARGET, UCHAR};
 use vigem::notification::*;
 use vigem::*;
 
