@@ -1,4 +1,4 @@
-use vigem::binds::{DS4_LIGHTBAR_COLOR, LPVOID, PVIGEM_CLIENT, PVIGEM_TARGET, UCHAR};
+use vigem::raw::{DS4_LIGHTBAR_COLOR, LPVOID, PVIGEM_CLIENT, PVIGEM_TARGET, UCHAR};
 use vigem::notification::*;
 use vigem::*;
 
@@ -18,7 +18,7 @@ pub fn main() {
         w_buttons: DS4Button::Circle,
         ..DSReport::default()
     };
-    vigem.ds4_update(&target, &report).unwrap();
+    vigem.update(&target, &report).unwrap();
 
     std::thread::sleep(std::time::Duration::new(99999999999, 0));
 }
