@@ -42,8 +42,7 @@ Check [examples](https://github.com/DuckerMan/vigem/tree/master/examples) or [re
 
 # Plans:
 - [x] [Documentation](https://docs.rs/vigem)
-- [x] Split to `-sys` crate
-- [ ] Macro for more comfortable using
-- [ ] Add `tests`
+- [x] [Split to `-sys` ](https://github.com/DuckerMan/vigem/tree/master/vigem-sys)
+- [x] Add `tests`
 - [ ] Auto bindings generation
-- [ ] Finish `Life is Strange 2` game
+- [ ] **Finish `Life is Strange 2` game**
