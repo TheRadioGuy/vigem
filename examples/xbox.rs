@@ -13,11 +13,11 @@ pub fn main() {
     // connect our client to a VigemBus
     vigem.connect().unwrap();
     // Make a new target which represent XBOX360 controller
-    let target = Target::new(TargetType::Xbox360);
+    let mut target = Target::new(TargetType::Xbox360);
     // Get controller state - as target isnt connected state is "Initialized"
     dbg!(target.state());
     // Add target to VigemBUS
-    vigem.target_add(&target).unwrap();
+    vigem.target_add(&mut target).unwrap();
     // Now it's connected!
     dbg!(target.state());
 

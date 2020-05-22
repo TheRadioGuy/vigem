@@ -6,6 +6,7 @@ use crate::raw::*;
 pub struct Target {
     pub raw: Box<PVIGEM_TARGET>,
     drop: bool,
+    client: Option<std::rc::Rc<Box<PVIGEM_CLIENT>>>
 }
 
 impl Target {
@@ -21,7 +22,12 @@ impl Target {
         Self {
             raw: Box::new(raw),
             drop: true,
+            client: None
         }
+    }
+
+    pub(crate) fn set_client(&mut self, client: std::rc::Rc<Box<PVIGEM_CLIENT>>){
+        self.client = Some(client);
     }
 
     /// Make safe abstraction over `PVIGEM_TARGET`, use when you get notification
@@ -29,6 +35,7 @@ impl Target {
         Self {
             raw: Box::new(target),
             drop: false,
+            client: None
         }
     }
 
@@ -121,6 +128,7 @@ impl Drop for Target {
     fn drop(&mut self) {
         if self.drop {
             self.free();
+            unsafe{vigem_target_remove(***(self.client.as_ref().unwrap()), *self.raw);} // Triple deferencing - that's why I love Rust!
         }
     }
 }

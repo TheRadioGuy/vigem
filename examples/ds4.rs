@@ -8,8 +8,8 @@ pub fn main() {
     let mut vigem = Vigem::new();
     vigem.connect().unwrap();
 
-    let target = Target::new(TargetType::DualShock4);
-    vigem.target_add(&target).unwrap();
+    let mut target = Target::new(TargetType::DualShock4);
+    vigem.target_add(&mut target).unwrap();
 
     vigem
         .ds4_register_notification(&target, Some(handle), 1)
