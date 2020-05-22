@@ -11,7 +11,7 @@ license = "GPL-3.0-or-later"
 exclude = ["target", "src/binds/*.h", "src/binds/*.cpp", "examples", "gamepad.png"]
 
 [dependencies]
-bitflags = "*"
+bitflags = "1.2.1"
 vigem-sys = "0.2"
 
 [profile.release]
