@@ -1,1 +1,0 @@
-bindgen .\ViGEmClient.cpp -o mod.rs  --whitelist-function 'vigem_.*'  --whitelist-type '_XUSB.*' --whitelist-type '_DS4.*'

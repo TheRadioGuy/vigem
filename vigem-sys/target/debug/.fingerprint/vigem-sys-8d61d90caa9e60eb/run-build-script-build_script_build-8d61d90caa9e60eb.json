@@ -1,1 +1,0 @@
-{"rustc":15304239394520029144,"features":"","target":0,"profile":0,"path":0,"deps":[[10063466384227759761,"build_script_build",false,2747574797749891176]],"local":[{"RerunIfChanged":{"output":"debug\\build\\vigem-sys-8d61d90caa9e60eb\\output","paths":["libs/VigemClient_x64.lib"]}}],"rustflags":[],"metadata":0}

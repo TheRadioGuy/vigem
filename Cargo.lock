@@ -17,5 +17,3 @@ dependencies = [
 [[package]]
 name = "vigem-sys"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "56820b417c4d117321dfd91d6ac908ecd08aef01b4db8c2f8699713f12750ff6"

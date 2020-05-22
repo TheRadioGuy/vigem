@@ -1,6 +1,6 @@
 [package]
 name = "vigem"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["Sergey Duck <sergeypechnikov326@gmail.com>"]
 edition = "2018"
 description = "Safe Rust bindings for ViGEm"
@@ -12,7 +12,7 @@ exclude = ["target", "src/binds/*.h", "src/binds/*.cpp", "examples", "gamepad.pn
 
 [dependencies]
 bitflags = "1.2.1"
-vigem-sys = "0.2"
+vigem-sys = "1"
 
 [profile.release]
 lto = true

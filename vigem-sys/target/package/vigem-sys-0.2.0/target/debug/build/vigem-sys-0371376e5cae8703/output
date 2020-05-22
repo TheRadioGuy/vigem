@@ -1,4 +1,0 @@
-cargo:rerun-if-changed=libs/VigemClient_x64.lib
-cargo:rustc-link-search=./libs
-cargo:rustc-link-lib=setupapi
-cargo:rustc-link-lib=VigemClient_x64

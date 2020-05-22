@@ -4,9 +4,22 @@ pub const LIB_NAME: &str = "VigemClient_x64";
 #[cfg(target_arch = "x86")]
 pub const LIB_NAME: &str = "VigemClient_x86";
 
+use std::fs;
+use std::path::PathBuf;
+
 fn main() {
-    println!("cargo:rerun-if-changed=libs/VigemClient_x64.lib");
-    println!("cargo:rustc-link-search=./libs");
+    let project_dir = std::env::var("OUT_DIR").unwrap();
+    let root_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
+
+    let first_path = format!("{}\\libs\\{}.lib", root_dir, LIB_NAME);
+    let second_path = format!("{}\\{}.lib", project_dir, LIB_NAME);
+
+    std::fs::copy(&first_path, &second_path).unwrap();
+
+    println!("cargo:rerun-if-changed=build.rs");
+
+    println!("cargo:rustc-link-search=static={}", format!("{}\\", project_dir));
     println!("cargo:rustc-link-lib=setupapi");
+
     println!("cargo:rustc-link-lib={}", LIB_NAME);
 }
