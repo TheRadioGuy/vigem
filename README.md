@@ -8,8 +8,6 @@
 
 These bindings are based on [ViGEm client](https://github.com/ViGEm/ViGEmClient)
 ### How to use?
-First of all, copy all files from `libs` catalog to `C:\Users\Username\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib`
-
 Check [examples](https://github.com/DuckerMan/vigem/tree/master/examples) or [read the docs](https://docs.rs/vigem)
 
 
