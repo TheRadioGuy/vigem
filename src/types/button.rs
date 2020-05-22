@@ -1,6 +1,14 @@
 use crate::binds::*;
 use std::ops::Add;
 
+pub trait Reportable {
+    type Output;
+    fn to_raw(&self) -> Self::Output;
+    fn to_xusb(&self) -> Option<&XUSBReport>;
+    fn to_ds(&self) -> Option<&DSReport>;
+}
+
+
 bitflags! {
     pub struct XButton: u16 {
         const DpadUp = 1;
@@ -46,8 +54,9 @@ pub struct XUSBReport {
 //     }
 // }
 
-impl XUSBReport {
-    pub fn to_raw(&self) -> XUSB_REPORT {
+impl Reportable for XUSBReport {
+    type Output = XUSB_REPORT;
+    fn to_raw(&self) -> XUSB_REPORT {
         let report = XUSB_REPORT {
             wButtons: self.w_buttons.bits(),
             bLeftTrigger: self.b_left_trigger,
@@ -58,6 +67,14 @@ impl XUSBReport {
             sThumbRY: self.s_thumb_ry,
         };
         report
+    }
+
+    fn to_ds(&self) -> Option<&DSReport> {
+        None
+    }
+
+    fn to_xusb(&self) -> Option<&XUSBReport> {
+        Some(self)
     }
 }
 
@@ -124,8 +141,9 @@ pub struct DSReport {
     pub b_trigger_r: u8,
 }
 
-impl DSReport {
-    pub fn to_raw(&self) -> _DS4_REPORT {
+impl Reportable for DSReport {
+    type Output = _DS4_REPORT;
+    fn to_raw(&self) -> _DS4_REPORT {
         _DS4_REPORT {
             bThumbLX: self.b_thumb_lx,
             bThumbLY: self.b_thumb_ly,
@@ -136,6 +154,14 @@ impl DSReport {
             bTriggerL: self.b_trigger_l,
             bTriggerR: self.b_trigger_r,
         }
+    }
+
+    fn to_ds(&self) -> Option<&DSReport> {
+        Some(self)
+    }
+
+    fn to_xusb(&self) -> Option<&XUSBReport> {
+        None
     }
 }
 

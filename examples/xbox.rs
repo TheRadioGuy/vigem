@@ -28,11 +28,11 @@ pub fn main() {
 
     // Now make a XUSBReport. So our controller will press Y button and LT
     let report = XUSBReport {
-        w_buttons: XButton::Y + XButton::X,
+        w_buttons: XButton::Guide,
         b_left_trigger: 100,
         ..XUSBReport::default()
     };
-    vigem.x360_update(&target, &report).unwrap();
+    vigem.update(&target, &report).unwrap();
 
     std::thread::sleep(std::time::Duration::new(999999, 0));
 }
@@ -72,7 +72,8 @@ unsafe extern "C" fn handle(
     let report = XUSBReport {
         w_buttons: XButton::B,
         b_right_trigger: 100,
+        s_thumb_lx: 20000,
         ..XUSBReport::default()
     };
-    vigem.x360_update(&target, &report).unwrap();
+    vigem.update(&target, &report).unwrap();
 }

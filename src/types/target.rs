@@ -9,6 +9,8 @@ pub struct Target {
 }
 
 impl Target {
+    /// Make a new Target and allocates it.
+    /// `tt` is `TargetType`
     pub fn new(tt: TargetType) -> Self {
         let raw;
         match tt {
@@ -22,6 +24,7 @@ impl Target {
         }
     }
 
+    /// Make safe abstraction over `PVIGEM_TARGET`, use when you get notification
     pub fn from_raw(target: PVIGEM_TARGET) -> Self {
         Self {
             raw: Box::new(target),
@@ -56,9 +59,8 @@ impl Target {
         unsafe { (*(*self.raw)).closingNotificationThreads }
     }
 
-    // pub fn notification(&self) -> u32 {
-    //     unsafe { (*self.raw).Notification }
-    // }
+    // ! Userdata can be another type and value
+    /// Get target userdata(as for now, it works pretty shitty)
     pub fn user_data<T: Sized>(&self) -> Option<&T> {
         unsafe {
             let data: *mut T = (*(*(self.raw))).NotificationUserData.cast();
@@ -69,13 +71,7 @@ impl Target {
             }
         }
     }
-    // pub fn cancel_notification_thread_event(&self) -> u32 {
-    //     unsafe { (*self.raw).cancelNotificationThreadEvent }
-    // }
-    // pub fn notification_thread_list(&self) -> u32 {
-    //     unsafe { (*self.raw).notificationThreadList }
-    // }
-
+ 
     pub fn index(&self) -> u32 {
         unsafe {
             let index = vigem_target_get_index(*self.raw);
@@ -85,19 +81,19 @@ impl Target {
 
     pub fn is_attached(&self) -> bool {
         unsafe {
-            return match vigem_target_is_attached(*self.raw) {
+            match vigem_target_is_attached(*self.raw) {
                 1 => true,
                 _ => false,
-            };
+            }
         }
     }
 
     pub fn unregister_notification(&self) {
         unsafe {
-            return match self.get_type() {
+            match self.get_type() {
                 TargetType::Xbox360 => vigem_target_x360_unregister_notification(*self.raw),
                 TargetType::DualShock4 => vigem_target_ds4_unregister_notification(*self.raw),
-            };
+            }
         }
     }
 

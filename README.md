@@ -8,7 +8,11 @@
 
 These bindings are based on [ViGEm client](https://github.com/ViGEm/ViGEmClient)
 ### How to use?
-Right now I'm writing my own documentation, so as for now you can check the examples directory
+Check [examples](https://github.com/DuckerMan/vigem/tree/master/examples) or [read the docs](https://docs.rs/vigem)
+
+
+![Cool Gamepad Image](https://forums.vigem.org/assets/uploads/files/1557594978383-6c4d9c51-5644-40ec-bd42-a54f022729db-image.png)
+
 
 # Functions:
 
@@ -39,3 +43,6 @@ Right now I'm writing my own documentation, so as for now you can check the exam
 # Plans:
 - [ ] Documentation(in progress)
 - [ ] Macro for more comfortable using
+- [ ] Add `tests`
+- [ ] Split to `-sys` crate
+- [ ] Finish `Life is Strange 2` game
