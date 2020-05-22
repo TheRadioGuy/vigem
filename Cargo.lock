@@ -8,7 +8,7 @@ checksum = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
 
 [[package]]
 name = "vigem"
-version = "0.6.0"
+version = "0.7.0"
 dependencies = [
  "bitflags",
  "vigem-sys",
@@ -16,4 +16,6 @@ dependencies = [
 
 [[package]]
 name = "vigem-sys"
-version = "0.2.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "312431f83bb5278fc7a61531d98c8c111de88d7280109a3390b967db929b2574"
