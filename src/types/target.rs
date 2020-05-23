@@ -1,12 +1,14 @@
 use crate::raw::*;
-
+use crate::types::button::Reportable;
+use crate::types::vigem::VigemError;
+use std::rc::Rc;
 /// It's a safe abstraction over `PVIGEM_TARGET`
 /// Note: If you use from_raw, dont forget to manually call `target.free()` or you will die
 #[derive(Debug)]
 pub struct Target {
     pub raw: Box<PVIGEM_TARGET>,
     drop: bool,
-    client: Option<std::rc::Rc<Box<PVIGEM_CLIENT>>>
+    client: Option<Rc<Box<PVIGEM_CLIENT>>>
 }
 
 impl Target {
@@ -31,11 +33,12 @@ impl Target {
     }
 
     /// Make safe abstraction over `PVIGEM_TARGET`, use when you get notification
-    pub fn from_raw(target: PVIGEM_TARGET) -> Self {
+    pub fn from_raw(target: PVIGEM_TARGET, client: PVIGEM_CLIENT) -> Self {
+        let client = Some(Rc::new(Box::new(client)));
         Self {
             raw: Box::new(target),
             drop: false,
-            client: None
+            client
         }
     }
 
@@ -92,6 +95,35 @@ impl Target {
                 1 => true,
                 _ => false,
             }
+        }
+    }
+
+    /// Send report, report type depends on target type
+    /// For DualShock4, type is: `DSReport`
+    /// For Xbox, type is `XUSBReport`
+    ///
+    /// ### Report:
+    /// `s_thumb` - can be from -32,768 to 32,767
+    /// `trigger` can be from 0 to 100
+    /// If you want to press button together, use bitwise:
+    /// ``` rust
+    /// let report = XUSBReport {
+    ///    w_buttons: XButton::B | XButton::DpadDown,
+    ///    b_right_trigger: 100,
+    ///    s_thumb_lx: 32000,
+    ///    ..XUSBReport::default()
+    /// };
+    /// target.update(&report).unwrap();
+    /// ```
+    pub fn update<T: Reportable>(&mut self, report: &T) -> Result<(), VigemError>{
+        unsafe{
+            let client = ***(self.client.as_ref().unwrap());
+
+            let err = match self.get_type() {
+                TargetType::Xbox360 => vigem_target_x360_update(client, *self.raw, report.to_xusb().unwrap().to_raw()),
+                TargetType::DualShock4 => vigem_target_ds4_update(client, *self.raw, report.to_ds().unwrap().to_raw())
+            };
+            VigemError::new(err).to_result()
         }
     }
 

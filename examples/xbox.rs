@@ -28,7 +28,7 @@ pub fn main() {
 
     // Now make a XUSBReport. So our controller will press Y button and LT
     let report = XUSBReport {
-        w_buttons: XButton::Guide,
+        w_buttons: XButton::DpadLeft,
         b_left_trigger: 100,
         ..XUSBReport::default()
     };
@@ -56,7 +56,7 @@ unsafe extern "C" fn handle(
     );
 
     // get target and client which we got in our callback
-    let target = notification.get_target();
+    let mut target = notification.get_target();
     let mut vigem = notification.get_client();
 
     println!(
@@ -67,13 +67,13 @@ unsafe extern "C" fn handle(
     // Get userdata(I dont know what it is)
     dbg!(notification.userdata());
 
-    // Now we press B button and RT
+    // Now we press B button AND DpadDown and RT
 
     let report = XUSBReport {
-        w_buttons: XButton::B,
+        w_buttons: XButton::B | XButton::DpadDown,
         b_right_trigger: 100,
         s_thumb_lx: 32000,
         ..XUSBReport::default()
     };
-    vigem.update(&target, &report).unwrap();
+   target.update(&report).unwrap();
 }

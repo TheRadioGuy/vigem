@@ -44,5 +44,6 @@ Check [examples](https://github.com/DuckerMan/vigem/tree/master/examples) or [re
 - [x] [Documentation](https://docs.rs/vigem)
 - [x] [Split to `-sys` ](https://github.com/DuckerMan/vigem/tree/master/vigem-sys)
 - [x] Add `tests`
+- [] Figure out why `userdata` can be another type and value
 - [ ] Auto bindings generation
 - [ ] **Finish `Life is Strange 2` game**

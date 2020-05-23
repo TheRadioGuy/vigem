@@ -12,13 +12,13 @@ pub fn main() {
     vigem.target_add(&mut target).unwrap();
 
     vigem
-        .ds4_register_notification(&target, Some(handle), 1)
+        .ds4_register_notification(&target, Some(handle), 100)
         .unwrap();
     let report = DSReport {
         w_buttons: DS4Button::Circle,
         ..DSReport::default()
     };
-    vigem.update(&target, &report).unwrap();
+    target.update(&report).unwrap();
 
     std::thread::sleep(std::time::Duration::new(99999999999, 0));
 }
@@ -31,7 +31,8 @@ unsafe extern "C" fn handle(
     arg5: DS4_LIGHTBAR_COLOR,
     arg6: LPVOID,
 ) {
-    let notification: DS4Notification<i32> =
+    println!("Getting handle");
+    let notification: DS4Notification<u32> =
         DS4Notification::from_raw(arg1, arg2, arg3, arg4, arg5, arg6);
     println!(
         "Lightbar color is: {:?}, large motor is: {} and small is {}",

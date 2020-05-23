@@ -34,7 +34,7 @@ impl<T: Sized> X360Notification<'_, T> {
 
     pub fn get_target(&self) -> Target {
         let target = *self.target;
-        Target::from_raw(target)
+        Target::from_raw(target, *self.client)
     }
 
     pub fn get_client(&self) -> Vigem {
@@ -50,7 +50,7 @@ pub struct DS4Notification<'a, T: Sized> {
     pub large_motor: u8,
     pub small_motor: u8,
     pub light_bar: LIGHTBAR_COLOR,
-    user_data: &'a T,
+    user_data: Option<&'a T>,
     client: Box<PVIGEM_CLIENT>,
     target: Box<PVIGEM_TARGET>,
 }
@@ -77,7 +77,19 @@ impl<T: Sized> DS4Notification<'_, T> {
         light_bar: DS4_LIGHTBAR_COLOR,
         user_data: LPVOID,
     ) -> Self {
-        let user_data = unsafe { *user_data.cast() };
+        let user_data = unsafe { // TODO: ACCESS_VIOLATION
+            if user_data.is_null(){
+                None
+            } else {
+                let casted: *mut T = user_data.cast();
+                if casted.is_null(){
+                    None
+                } else{
+                    Some(&*casted)
+                }
+            }
+        };
+
         Self {
             large_motor,
             small_motor,
@@ -89,14 +101,14 @@ impl<T: Sized> DS4Notification<'_, T> {
     }
 
     pub fn get_target(&self) -> Target {
-        Target::from_raw(*self.target)
+        Target::from_raw(*self.target, *self.client)
     }
 
     pub fn get_client(&self) -> Vigem {
         Vigem::from_raw(*self.client)
     }
 
-    pub fn userdata(&self) -> &T {
+    pub fn userdata(&self) -> &Option<&T> {
         &self.user_data
     }
 }

@@ -87,14 +87,11 @@ impl Vigem {
         }
     }
 
-    /// Send report, report type depends on target type
-    /// For DualShock4, type is: `DSReport`
-    /// For Xbox, type is `XUSBReport`
-    ///
-    /// ### Report:
-    /// `s_thumb` - can be from -32,768 to 32,767
-    /// `trigger` can be from 0 to 100
-    /// 
+    
+    #[deprecated(
+        since = "0.9",
+        note = "Please use `update` function on Target instance"
+    )]
     pub fn update<T: Reportable>(&mut self, target: &Target, report: &T) -> Result<(), VigemError>{
         unsafe{
             let err = match target.get_type() {
