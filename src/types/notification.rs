@@ -21,15 +21,15 @@ impl<T: Sized> X360Notification<'_, T> {
         led_number: UCHAR,
         user_data: LPVOID,
     ) -> Self {
-        let user_data = unsafe{&*(user_data.cast())};
-        return Self {
+        let user_data = unsafe { &*(user_data.cast()) };
+        Self {
             large_motor,
             small_motor,
             led_number,
             user_data,
             client: Box::new(client),
             target: Box::new(target),
-        };
+        }
     }
 
     pub fn get_target(&self) -> Target {
@@ -38,21 +38,19 @@ impl<T: Sized> X360Notification<'_, T> {
     }
 
     pub fn get_client(&self) -> Vigem {
-        let client = *self.client;
-        let client = Vigem::from_raw(client);
-        client
+        Vigem::from_raw(*self.client)
     }
 
     pub fn userdata(&self) -> &T {
-            &self.user_data
+        &self.user_data
     }
 }
 
-pub struct DS4Notification<T: Sized> {
+pub struct DS4Notification<'a, T: Sized> {
     pub large_motor: u8,
     pub small_motor: u8,
     pub light_bar: LIGHTBAR_COLOR,
-    user_data: *mut T,
+    user_data: &'a T,
     client: Box<PVIGEM_CLIENT>,
     target: Box<PVIGEM_TARGET>,
 }
@@ -70,7 +68,7 @@ impl LIGHTBAR_COLOR {
     }
 }
 
-impl<T: Sized> DS4Notification<T> {
+impl<T: Sized> DS4Notification<'_, T> {
     pub fn from_raw(
         client: PVIGEM_CLIENT,
         target: PVIGEM_TARGET,
@@ -79,35 +77,26 @@ impl<T: Sized> DS4Notification<T> {
         light_bar: DS4_LIGHTBAR_COLOR,
         user_data: LPVOID,
     ) -> Self {
-        let user_data: *mut T = user_data.cast();
-        return Self {
+        let user_data = unsafe { *user_data.cast() };
+        Self {
             large_motor,
             small_motor,
             light_bar: LIGHTBAR_COLOR::new(light_bar.Red, light_bar.Green, light_bar.Blue),
             user_data,
             client: Box::new(client),
             target: Box::new(target),
-        };
+        }
     }
 
     pub fn get_target(&self) -> Target {
-        let target = *self.target;
-        Target::from_raw(target)
+        Target::from_raw(*self.target)
     }
 
     pub fn get_client(&self) -> Vigem {
-        let client = *self.client;
-        let client = Vigem::from_raw(client);
-        client
+        Vigem::from_raw(*self.client)
     }
 
-    pub fn userdata(&self) -> Option<&T> {
-        unsafe {
-            if !self.user_data.is_null() {
-                return Some(&*self.user_data);
-            } else {
-                return None;
-            }
-        }
+    pub fn userdata(&self) -> &T {
+        &self.user_data
     }
 }

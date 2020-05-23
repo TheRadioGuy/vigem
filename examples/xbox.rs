@@ -64,7 +64,7 @@ unsafe extern "C" fn handle(
         notification.large_motor, notification.small_motor
     );
     dbg!(target.state());
-    // Got userdata(I dont know what it is)
+    // Get userdata(I dont know what it is)
     dbg!(notification.userdata());
 
     // Now we press B button and RT
@@ -72,7 +72,7 @@ unsafe extern "C" fn handle(
     let report = XUSBReport {
         w_buttons: XButton::B,
         b_right_trigger: 100,
-        s_thumb_lx: 20000,
+        s_thumb_lx: 32000,
         ..XUSBReport::default()
     };
     vigem.update(&target, &report).unwrap();

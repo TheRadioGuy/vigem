@@ -57,7 +57,7 @@ pub struct XUSBReport {
 impl Reportable for XUSBReport {
     type Output = XUSB_REPORT;
     fn to_raw(&self) -> XUSB_REPORT {
-        let report = XUSB_REPORT {
+         XUSB_REPORT {
             wButtons: self.w_buttons.bits(),
             bLeftTrigger: self.b_left_trigger,
             bRightTrigger: self.b_right_trigger,
@@ -65,8 +65,7 @@ impl Reportable for XUSBReport {
             sThumbLY: self.s_thumb_ly,
             sThumbRX: self.s_thumb_rx,
             sThumbRY: self.s_thumb_ry,
-        };
-        report
+        }
     }
 
     fn to_ds(&self) -> Option<&DSReport> {
