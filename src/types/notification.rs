@@ -1,18 +1,18 @@
 use crate::raw::*;
-use crate::types::target::{Target, TargetState};
+use crate::types::target::Target;
 use crate::types::vigem::Vigem;
 
 #[derive(Debug)]
-pub struct X360Notification<T: Sized> {
+pub struct X360Notification<'a, T: Sized> {
     pub large_motor: u8,
     pub small_motor: u8,
     pub led_number: u8,
-    user_data: *mut T,
+    user_data: &'a T,
     client: Box<PVIGEM_CLIENT>,
     target: Box<PVIGEM_TARGET>,
 }
 
-impl<T: Sized> X360Notification<T> {
+impl<T: Sized> X360Notification<'_, T> {
     pub fn new(
         client: PVIGEM_CLIENT,
         target: PVIGEM_TARGET,
@@ -21,7 +21,7 @@ impl<T: Sized> X360Notification<T> {
         led_number: UCHAR,
         user_data: LPVOID,
     ) -> Self {
-        let user_data: *mut T = user_data.cast();
+        let user_data = unsafe{&*(user_data.cast())};
         return Self {
             large_motor,
             small_motor,
@@ -43,14 +43,8 @@ impl<T: Sized> X360Notification<T> {
         client
     }
 
-    pub fn userdata(&self) -> Option<&T> {
-        unsafe {
-            if !self.user_data.is_null() {
-                return Some(&*self.user_data);
-            } else {
-                return None;
-            }
-        }
+    pub fn userdata(&self) -> &T {
+            &self.user_data
     }
 }
 

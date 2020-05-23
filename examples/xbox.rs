@@ -65,7 +65,7 @@ unsafe extern "C" fn handle(
     );
     dbg!(target.state());
     // Got userdata(I dont know what it is)
-    dbg!(notification.userdata().unwrap());
+    dbg!(notification.userdata());
 
     // Now we press B button and RT
 

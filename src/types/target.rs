@@ -127,8 +127,8 @@ impl Drop for Target {
     /// Always drop a target - we are good boys
     fn drop(&mut self) {
         if self.drop {
-            self.free();
             unsafe{vigem_target_remove(***(self.client.as_ref().unwrap()), *self.raw);} // Triple deferencing - that's why I love Rust!
+            self.free();
         }
     }
 }

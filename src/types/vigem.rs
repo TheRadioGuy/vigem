@@ -1,8 +1,8 @@
 use crate::raw::*;
 use crate::types::target::{Target, TargetType};
 // use crate::types::button::Reportable;
-use crate::types::button::{DSReport,XUSBReport, Reportable};
-use std::rc::{Rc, Weak};
+use crate::types::button::Reportable;
+use std::rc::Rc;
 
 pub struct Vigem {
     pub vigem: Rc<Box<PVIGEM_CLIENT>>,
@@ -55,7 +55,6 @@ impl Vigem {
         }
     }
 
-    // TODO: Add to target drop
     /// Removes a provided target device from the bus driver, which is equal to a device unplug event of a physical hardware device. The target device object may be reused
     pub fn target_remove(&mut self, target: &Target) -> Result<(), VigemError> {
         unsafe {
@@ -91,7 +90,11 @@ impl Vigem {
     /// Send report, report type depends on target type
     /// For DualShock4, type is: `DSReport`
     /// For Xbox, type is `XUSBReport`
-    /// **TODO**:  Add guide how to make report
+    ///
+    /// ### Report:
+    /// `s_thumb` - can be from -32,768 to 32,767
+    /// `trigger` can be from 0 to 100
+    /// 
     pub fn update<T: Reportable>(&mut self, target: &Target, report: &T) -> Result<(), VigemError>{
         unsafe{
             let err = match target.get_type() {
