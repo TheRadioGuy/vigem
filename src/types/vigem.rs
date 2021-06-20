@@ -169,25 +169,24 @@ pub enum VigemError {
     InvalidParameter,
 }
 
-// TODO: Replace codes to ones from vigem bindings
 impl VigemError {
     pub fn new(code: VIGEM_ERROR) -> VigemError {
         match code {
-            536870912 => VigemError::None,
-            536870911 => VigemError::BusNotFound,
-            536870910 => VigemError::NoFreeSlot,
-            536870909 => VigemError::InvalidTarget,
-            536870908 => VigemError::RemovalFailed,
-            536870907 => VigemError::AlreadyConnected,
-            536870906 => VigemError::TargetUninitalized,
-            536870905 => VigemError::NotPluggedIn,
-            536870903 => VigemError::BusAccessFailed,
-            536870896 => VigemError::CallbackAlreadyRegistered,
-            536870895 => VigemError::CallbackNotFound,
-            536870894 => VigemError::BusAlreadyConnected,
-            536870893 => VigemError::BusInvalidHandle,
-            536870892 => VigemError::XusbUserIndexOutOfRange,
-            536870891 => VigemError::InvalidParameter,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_NONE => VigemError::None,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_BUS_NOT_FOUND => VigemError::BusNotFound,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_NO_FREE_SLOT => VigemError::NoFreeSlot,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_INVALID_TARGET => VigemError::InvalidTarget,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_REMOVAL_FAILED => VigemError::RemovalFailed,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_ALREADY_CONNECTED => VigemError::AlreadyConnected,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_TARGET_UNINITIALIZED => VigemError::TargetUninitalized,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_TARGET_NOT_PLUGGED_IN => VigemError::NotPluggedIn,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_BUS_ACCESS_FAILED => VigemError::BusAccessFailed,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_CALLBACK_ALREADY_REGISTERED => VigemError::CallbackAlreadyRegistered,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_CALLBACK_NOT_FOUND => VigemError::CallbackNotFound,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_BUS_ALREADY_CONNECTED => VigemError::BusAlreadyConnected,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_BUS_INVALID_HANDLE => VigemError::BusInvalidHandle,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_XUSB_USERINDEX_OUT_OF_RANGE => VigemError::XusbUserIndexOutOfRange,
+            vigem_sys::_VIGEM_ERRORS_VIGEM_ERROR_INVALID_PARAMETER => VigemError::InvalidParameter,
             _ => unreachable!(),
         }
     }
