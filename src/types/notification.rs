@@ -19,7 +19,7 @@ impl<T: Sized> X360Notification<'_, T> {
         large_motor: UCHAR,
         small_motor: UCHAR,
         led_number: UCHAR,
-        user_data: LPVOID,
+        user_data: *mut T,
     ) -> Self {
         let user_data = unsafe { &*(user_data.cast()) };
         Self {
