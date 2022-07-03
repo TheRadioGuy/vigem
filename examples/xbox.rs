@@ -3,7 +3,7 @@
 #![allow(non_snake_case)]
 #![allow(dead_code)]
 
-use vigem::raw::{LPVOID, PVIGEM_CLIENT, PVIGEM_TARGET, UCHAR};
+use vigem::raw::{PVIGEM_CLIENT, PVIGEM_TARGET, UCHAR};
 use vigem::notification::*;
 use vigem::*;
 
@@ -22,8 +22,10 @@ pub fn main() {
     dbg!(target.state());
 
     // It's a bit harder. We register notification. Handle will be called every time controller get forcefeedbacked
+    let mut data = 0;
+
     vigem
-        .x360_register_notification::<i32>(&target, Some(handle), 123123123)
+        .x360_register_notification(&target, Some(handle), &mut data)
         .unwrap();
 
     // Now make a XUSBReport. So our controller will press Y button and LT
@@ -43,10 +45,10 @@ unsafe extern "C" fn handle(
     large_motor: UCHAR,
     small_motor: UCHAR,
     led_number: UCHAR,
-    user_data: LPVOID,
+    user_data: *mut i32,
 ) {
     // make a safe absraction over all arguments
-    let notification: X360Notification<i32> = X360Notification::new(
+    let notification = X360Notification::new(
         client,
         target,
         large_motor,

@@ -89,7 +89,7 @@ impl Vigem {
 
     
     #[deprecated(
-        since = "0.9",
+        since = "0.9.0",
         note = "Please use `update` function on Target instance"
     )]
     pub fn update<T: Reportable>(&mut self, target: &Target, report: &T) -> Result<(), VigemError>{
@@ -106,15 +106,24 @@ impl Vigem {
     pub fn x360_register_notification<T: Sized>(
         &mut self,
         target: &Target,
-        func: PFN_VIGEM_X360_NOTIFICATION,
-        mut data: T,
+        func: std::option::Option<
+            unsafe extern "C" fn(
+                arg1: PVIGEM_CLIENT,
+                arg2: PVIGEM_TARGET,
+                arg3: UCHAR,
+                arg4: UCHAR,
+                arg5: UCHAR,
+                arg6: *mut T,
+            ),
+        >,
+        data: &mut T,
     ) -> Result<(), VigemError> {
         unsafe {
-            let data_ptr: *mut T = &mut data;
+            let data_ptr: *mut T = data;
             let err = vigem_target_x360_register_notification(
                 **self.vigem,
                 *target.raw,
-                func,
+                std::mem::transmute(func),
                 data_ptr.cast(),
             );
             VigemError::new(err).to_result()
@@ -210,7 +219,7 @@ impl VigemError {
 
 impl std::fmt::Display for VigemError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self)
+        write!(f, "{self:?}")
     }
 }
 
